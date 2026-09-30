@@ -2,7 +2,7 @@
 window.SHOP = (function () {
   const slot = (id, name, icon, items) => ({ id, name, icon, items });
   const paints = [
-    ['orange', 'Sunset Orange', '#ff7a2e', 0], ['crimson', 'Crimson', '#d81f3a', 150], ['blue', 'Electric Blue', '#2f6bff', 150],
+    ['astro', 'ASTRO Blue', '#0a72ff', 0], ['orange', 'Sunset Orange', '#ff7a2e', 0], ['crimson', 'Crimson', '#d81f3a', 150], ['blue', 'Electric Blue', '#2f6bff', 150],
     ['emerald', 'Emerald', '#12b886', 200], ['violet', 'Violet', '#8b5cf6', 200], ['pink', 'Hot Pink', '#ff5fb0', 250],
     ['pearl', 'Pearl White', '#f0f0f6', 250], ['black', 'Matte Black', '#1b1c25', 300, { rough: 0.85, metal: 0.1 }],
     ['gold', 'Liquid Gold', '#f5c542', 700, { rough: 0.15, metal: 1 }], ['chrome', 'Chrome', '#cfd4e6', 900, { rough: 0.05, metal: 1 }]

@@ -503,7 +503,7 @@
 
   function readLook(over) {
     const P = Progress; const pick = (slot, d) => { const id = P.equipped(slot, d); const it = shopItem(slot, id); return isOwned(slot, it) ? it.id : d; };
-    return Object.assign({ paint: pick('paint', 'orange'), body: pick('body', 'classic'), rims: pick('rims', 'silver'), neon: pick('neon', 'off'), lights: pick('lights', 'warm'), horn: pick('horn', 'classic'), smoke: pick('smoke', 'white') }, over || {});
+    return Object.assign({ paint: pick('paint', 'astro'), body: pick('body', 'classic'), rims: pick('rims', 'silver'), neon: pick('neon', 'off'), lights: pick('lights', 'warm'), horn: pick('horn', 'classic'), smoke: pick('smoke', 'white') }, over || {});
   }
 
   function buildCar(l) {
