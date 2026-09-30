@@ -10,7 +10,7 @@
   $('#stats').innerHTML = [
     [projects.length, 'Projects'],
     [categories.length, 'Domains'],
-    ['3+', 'Years in ML']
+    ['2025', 'Since']
   ].map(([n, l]) => `<div class="stat"><b>${n}</b><span>${l}</span></div>`).join('');
 
   /* Thumbnail: deterministic generative art from id + category colours --- */
@@ -116,24 +116,12 @@
   render();
 
   /* About ----------------------------------------------------------------- */
-  $('#roles').innerHTML = profile.now.map((r) => `<div class="role-card"><small>${esc(r.when)}</small><h4>${esc(r.role)}</h4><p>${esc(r.org)}</p></div>`).join('');
+  $('#roles').innerHTML = profile.offer.map((r) => `<div class="role-card"><small>What we do</small><h4>${esc(r.title)}</h4><p>${esc(r.text)}</p></div>`).join('');
   $('#skills').innerHTML = Object.entries(profile.skills).map(([k, v]) => `<div class="skill-group"><h4>${esc(k)}</h4><div>${v.map((t) => `<span class="tech">${esc(t)}</span>`).join('')}</div></div>`).join('');
-  const tl = [
-    ['Apr 2026 – Present', 'IT Officer', 'ITI – Damietta Branch'],
-    ['May 2025 – Present', 'Co-Founder & Lead AI / Robotics Instructor', 'ASTRO'],
-    ['Dec 2024 – Oct 2025', 'AI & Data Science Instructor', 'Digital Egypt Cubs Initiative (DECI)'],
-    ['Oct 2024 – Jul 2025', 'Autonomous Team Member', 'DU Racing Team — ROS, LIDAR, Shell Eco-marathon'],
-    ['Jun 2024 – Nov 2024', 'Microsoft ML Engineer Trainee', 'Digital Egypt Pioneers Initiative (DEPI)'],
-    ['2021 – 2025', 'B.Sc. Computers & AI (AI major)', 'Damietta University']
-  ];
-  $('#timeline').innerHTML = tl.map(([w, t, o]) => `<div class="tl"><small>${esc(w)}</small><h4>${esc(t)}</h4><p>${esc(o)}</p></div>`).join('');
-
   /* Contact --------------------------------------------------------------- */
   $('#contact-links').innerHTML = `
-    <a class="btn primary lg" href="mailto:${profile.email}">${profile.email}</a>
-    <a class="btn lg" href="${profile.links.linkedin}" target="_blank" rel="noopener">LinkedIn ↗</a>
-    <a class="btn lg" href="${profile.links.github}" target="_blank" rel="noopener">GitHub ↗</a>
-    <a class="btn lg" href="tel:${profile.phone}">${profile.phoneDisplay}</a>`;
+    <a class="btn primary lg" href="${profile.links.facebook}" target="_blank" rel="noopener">ASTRO on Facebook ↗</a>
+    <a class="btn lg" href="${profile.links.github}" target="_blank" rel="noopener">GitHub ↗</a>`;
 
   /* Nav + reveal ---------------------------------------------------------- */
   const nav = $('#nav');

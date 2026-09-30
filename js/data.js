@@ -11,19 +11,17 @@
     name: 'ASTRO Projects',
     first: 'ASTRO',
     last: 'Projects',
-    role: 'Machine Learning & Embedded Systems Engineer',
-    tagline: 'I build intelligent systems where machine learning meets hardware — from eye-controlled wheelchairs to smart cities in miniature.',
-    location: 'Damietta, Egypt',
-    email: 'samer.wael.2003@gmail.com',
-    phone: '+201554563448',
-    phoneDisplay: '(+20) 155 456 3448',
+    role: 'Robotics · Embedded Systems · IoT · AI',
+    tagline: 'ASTRO is a training and technical-development studio in New Damietta, Egypt. Explore the robotics, embedded, IoT and AI projects built by the ASTRO team — or drive through them in 3D.',
+    location: 'New Damietta, Egypt',
     links: {
-      github: 'https://github.com/SamerWaelElbehidy',
-      linkedin: 'https://www.linkedin.com/in/samer219wael/'
+      facebook: 'https://www.facebook.com/astro.school.eg',
+      github: 'https://github.com/SamerWaelElbehidy'
     },
-    now: [
-      { role: 'IT Officer', org: 'Information Technology Institute (ITI) – Damietta Branch', when: 'Apr 2026 – Present' },
-      { role: 'Co-Founder & Lead AI / Robotics Instructor', org: 'ASTRO', when: 'May 2025 – Present' }
+    offer: [
+      { title: 'Training', text: 'Hands-on courses in robotics, electronics, Arduino, ESP32, CAD and 3D printing for children, students and adults.' },
+      { title: 'Projects', text: 'Robotics, IoT, embedded and AI systems designed, built, programmed and tested in-house.' },
+      { title: 'Store & fabrication', text: 'Electronic components, sensors, motors, 3D printing and laser cutting.' }
     ],
     skills: {
       'Machine Learning': ['Python', 'TensorFlow', 'Keras', 'PyTorch', 'Scikit-learn', 'OpenCV', 'CNNs', 'TinyML'],
