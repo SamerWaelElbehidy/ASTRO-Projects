@@ -15,6 +15,8 @@
     tagline: 'ASTRO is a training and technical-development studio in New Damietta, Egypt. Explore the robotics, embedded, IoT and AI projects built by the ASTRO team — or drive through them in 3D.',
     location: 'New Damietta, Egypt',
     links: {
+      whatsapp: 'https://wa.me/201068403242',
+      whatsappDisplay: '010 6840 3242',
       facebook: 'https://www.facebook.com/astro.school.eg',
       github: 'https://github.com/SamerWaelElbehidy'
     },

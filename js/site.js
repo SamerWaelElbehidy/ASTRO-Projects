@@ -120,7 +120,8 @@
   $('#skills').innerHTML = Object.entries(profile.skills).map(([k, v]) => `<div class="skill-group"><h4>${esc(k)}</h4><div>${v.map((t) => `<span class="tech">${esc(t)}</span>`).join('')}</div></div>`).join('');
   /* Contact --------------------------------------------------------------- */
   $('#contact-links').innerHTML = `
-    <a class="btn primary lg" href="${profile.links.facebook}" target="_blank" rel="noopener">ASTRO on Facebook ↗</a>
+    <a class="btn primary lg" href="${profile.links.whatsapp}" target="_blank" rel="noopener">WhatsApp · ${profile.links.whatsappDisplay}</a>
+    <a class="btn lg" href="${profile.links.facebook}" target="_blank" rel="noopener">Facebook ↗</a>
     <a class="btn lg" href="${profile.links.github}" target="_blank" rel="noopener">GitHub ↗</a>`;
 
   /* Nav + reveal ---------------------------------------------------------- */
