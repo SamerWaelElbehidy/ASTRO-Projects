@@ -181,7 +181,7 @@
   // Central monument: big name sign + rotating sphere of nodes
   const monument = new THREE.Group(); world.add(monument);
   { const base = cyl(4.4, 5, 1.2, 32, mat(0x363b57)); base.position.y = 0.6; base.receiveShadow = true; base.castShadow = true; monument.add(base);
-    const core = new THREE.Mesh(new THREE.IcosahedronGeometry(2.6, 1), new THREE.MeshStandardMaterial({ color: 0x7c5cff, emissive: 0x4d33d6, emissiveIntensity: 0.7, flatShading: true, roughness: 0.35 }));
+    const core = new THREE.Mesh(new THREE.IcosahedronGeometry(2.6, 1), new THREE.MeshStandardMaterial({ color: 0x0a72ff, emissive: 0x0050c8, emissiveIntensity: 0.7, flatShading: true, roughness: 0.35 }));
     core.position.y = 5.2; core.castShadow = true; monument.userData.core = core; monument.add(core);
     const wire = new THREE.Mesh(new THREE.IcosahedronGeometry(3.4, 1), new THREE.MeshBasicMaterial({ color: 0x33d6ff, wireframe: true, transparent: true, opacity: 0.5 }));
     wire.position.y = 5.2; monument.userData.wire = wire; monument.add(wire);
@@ -198,6 +198,7 @@
       g.font = `500 32px 'JetBrains Mono', monospace`; g.fillStyle = '#33d6ff';
       g.fillText('DRIVE TO A DISTRICT  →', w / 2, 326);
     });
+    { const img = new Image(); img.onload = () => { const g = tex.image.getContext('2d'); g.clearRect(0, 0, 1024, 384); const lh = 200, lw = lh * img.width / img.height; g.drawImage(img, 512 - lw / 2, 6, lw, lh); g.textAlign = 'center'; g.fillStyle = '#fff'; g.font = `700 70px ${FONT}`; g.fillText('P R O J E C T S', 512, 288); g.font = `500 30px 'JetBrains Mono', monospace`; g.fillStyle = '#33d6ff'; g.fillText('DRIVE TO A DISTRICT  →', 512, 350); tex.needsUpdate = true; }; img.src = 'assets/astro-logo-white.webp'; }
     const sign = new THREE.Mesh(new THREE.PlaneGeometry(15, 5.6), new THREE.MeshBasicMaterial({ map: tex, transparent: true, toneMapped: false, side: THREE.DoubleSide, depthWrite: false, fog: false }));
     sign.position.y = 11.6; monument.userData.sign = sign; monument.add(sign);
     addStatic(0, 0, 5.2); }

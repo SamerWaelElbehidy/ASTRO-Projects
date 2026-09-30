@@ -59,8 +59,8 @@
   transition: transform 0.2s var(--ease), background 0.2s, border-color 0.2s, box-shadow 0.2s;
 }
 .btn:hover { transform: translateY(-2px); background: rgba(255, 255, 255, 0.09); border-color: rgba(255, 255, 255, 0.28); }
-.btn.primary { background: linear-gradient(135deg, var(--accent), #5a3dff); border-color: transparent; box-shadow: 0 10px 30px rgba(124, 92, 255, 0.35); }
-.btn.primary:hover { box-shadow: 0 14px 40px rgba(124, 92, 255, 0.5); }
+.btn.primary { background: linear-gradient(135deg, var(--accent), #0058d6); border-color: transparent; box-shadow: 0 10px 30px rgba(10, 114, 255, 0.35); }
+.btn.primary:hover { box-shadow: 0 14px 40px rgba(10, 114, 255, 0.5); }
 
 @media (max-width: 600px) {
   .pm-overlay { padding: 0; align-items: flex-end; }
