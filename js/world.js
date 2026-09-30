@@ -4,6 +4,7 @@
    ========================================================================== */
 (async function () {
   'use strict';
+  await window.PORTFOLIO.ready;
   const { categories, projects, byCat, cat } = window.PORTFOLIO;
   const UI = window.PortfolioUI;
   const $ = (s) => document.querySelector(s);
@@ -105,7 +106,10 @@
   { const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: canvasTex(256, 256, (g) => { const gr = g.createRadialGradient(128, 128, 0, 128, 128, 128); gr.addColorStop(0, 'rgba(255,240,200,1)'); gr.addColorStop(0.25, 'rgba(255,190,120,0.85)'); gr.addColorStop(1, 'rgba(255,140,90,0)'); g.fillStyle = gr; g.fillRect(0, 0, 256, 256); }), fog: false, depthWrite: false, transparent: true }));
     sp.scale.set(420, 420, 1); sp.position.set(-520, 150, -700); sp.renderOrder = -8; scene.add(sp); }
 
-  const WORLD_R = 330;
+  const NCAT = categories.length;
+  const MAX_PAD = Math.max(...categories.map((c) => 20 + Math.sqrt(byCat(c.id).length) * 7));
+  const RING = Math.max(178, Math.ceil((2 * MAX_PAD + 12) / (2 * Math.sin(Math.PI / NCAT))));
+  const WORLD_R = Math.max(330, RING + MAX_PAD + 40);
   const groundTex = canvasTex(256, 256, (g, w, h) => {
     g.fillStyle = '#2c5e58'; g.fillRect(0, 0, w, h);
     for (let i = 0; i < 1400; i++) { g.fillStyle = `rgba(${rnd() > 0.5 ? '255,255,255' : '0,20,30'},${0.02 + rnd() * 0.04})`; g.fillRect(rnd() * w, rnd() * h, 2 + rnd() * 3, 2 + rnd() * 3); }
@@ -144,7 +148,6 @@
   const PLAZA_R = 22;
   const N = categories.length;
   const GARAGE = { x: 15.7, z: -43.2 };
-  const RING = 178;
   const districts = categories.map((c, k) => {
     const list = byCat(c.id);
     const a = (k / N) * TAU;

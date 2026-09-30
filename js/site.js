@@ -1,3 +1,4 @@
+window.PORTFOLIO.ready.then(function () {
 (function () {
   const { profile, categories, projects, cat, byCat } = window.PORTFOLIO;
   const { el, esc, open } = window.PortfolioUI;
@@ -182,3 +183,5 @@
   sync(); P.on(sync);
   P.on(() => document.querySelectorAll('.card').forEach((c) => { /* found state is set on click */ }));
 })();
+
+});

@@ -3,7 +3,6 @@
 (function () {
   const KEY = 'astro-projects-progress-v1';
   const { projects, categories } = window.PORTFOLIO;
-  const TOTAL = projects.length;
   const listeners = [];
   const blank = () => ({ v: 1, found: {}, coins: 0, earned: 0, owned: {}, eq: {}, collected: {}, bonus: {}, stats: { drift: 0, coins: 0 } });
   let mem = null;
@@ -25,7 +24,7 @@
   function discover(p) {
     if (state.found[p.id]) return null;
     state.found[p.id] = Date.now();
-    const out = { reward: reward(p), bonuses: [], count: 0, total: TOTAL, project: p };
+    const out = { reward: reward(p), bonuses: [], count: 0, total: projects.length, project: p };
     state.coins += out.reward; state.earned += out.reward;
     // category completion bonuses
     p.cats.forEach((cid) => {
@@ -35,13 +34,13 @@
       if (all.every((q) => state.found[q.id])) { state.bonus[cid] = true; state.coins += 300; state.earned += 300; out.bonuses.push({ label: c.name + ' complete', amount: 300, color: c.color }); }
     });
     out.count = count();
-    if (out.count === TOTAL && !state.bonus.all) { state.bonus.all = true; state.coins += 2000; state.earned += 2000; out.bonuses.push({ label: 'Every project discovered', amount: 2000, color: '#ffd23f' }); }
+    if (out.count === projects.length && !state.bonus.all) { state.bonus.all = true; state.coins += 2000; state.earned += 2000; out.bonuses.push({ label: 'Every project discovered', amount: 2000, color: '#ffd23f' }); }
     save();
     return out;
   }
 
   window.Progress = {
-    TOTAL,
+    get TOTAL() { return projects.length; },
     get state() { return state; },
     count,
     coins: () => state.coins,

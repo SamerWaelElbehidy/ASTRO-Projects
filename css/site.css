@@ -189,3 +189,10 @@ footer .wrap { justify-content: center; text-align: center; gap: 0.4rem 2rem; }
 .logo img { height: 42px; width: auto; display: block; }
 .f-brand { display: inline-flex; align-items: center; gap: 0.6rem; }
 .f-brand img { height: 22px; width: auto; }
+
+/* Booking call-to-action */
+.book { padding: 0; }
+.book-card { text-align: center; padding: clamp(2rem, 6vw, 4rem); border-radius: 28px; border: 1px solid var(--line-2); background: radial-gradient(700px 300px at 50% 0%, rgba(10, 114, 255, 0.22), transparent 70%), var(--surface); }
+.book-card .lead { margin-bottom: 1.6rem; }
+.book-cta { display: flex; flex-wrap: wrap; gap: 0.7rem; justify-content: center; }
+.btn.gold-o { border-color: rgba(255, 210, 63, 0.55); color: #ffd86b; }

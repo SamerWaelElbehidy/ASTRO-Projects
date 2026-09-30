@@ -1,0 +1,45 @@
+rules_version = '2';
+// ASTRO Projects — Firestore rules for the booking system.
+// MERGE these blocks into your existing rules (do not delete the rules other sites in this Firebase project rely on).
+// Replace ADMIN_EMAIL with the e-mail of the admin account you create in Firebase Authentication.
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isAdmin() {
+      return request.auth != null && request.auth.token.email in ['ADMIN_EMAIL@example.com'];
+    }
+
+    // A new order can only be created as "pending", without any admin-only fields.
+    function validOrder(id) {
+      let d = request.resource.data;
+      return d.id == id
+        && d.status == 'pending'
+        && d.clientName is string && d.clientName.size() > 1 && d.clientName.size() < 120
+        && d.clientEmail is string && d.clientEmail.size() < 200
+        && d.clientPhone is string && d.clientPhone.size() < 40
+        && d.description is string && d.description.size() >= 20 && d.description.size() < 5000
+        && !('pricing' in d) && !('referralIssued' in d) && !('publishedProjectId' in d)
+        && !('adminNotes' in d) && !('commissionPaid' in d);
+    }
+
+    // Orders: anyone can place one; only the person who knows the secret code can read that single order (tracking);
+    // only the admin can list, change or delete orders.
+    match /astro_orders/{id} {
+      allow create: if validOrder(id);
+      allow get: if true;
+      allow list, update, delete: if isAdmin();
+    }
+
+    // Referral codes: created by the admin when a project is finished; anyone can check one code exists.
+    match /astro_referrals/{code} {
+      allow get: if true;
+      allow list, create, update, delete: if isAdmin();
+    }
+
+    // Finished projects shown on the site and in the 3D world.
+    match /astro_projects/{id} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+  }
+}

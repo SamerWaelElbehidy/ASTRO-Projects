@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Book a project — ASTRO Projects</title>
+  <meta name="description" content="Book your project with ASTRO: medical devices, IoT, AI, robotics, embedded systems, graduation and research projects.">
+  <meta name="theme-color" content="#07080d">
+  <link rel="icon" type="image/png" href="assets/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/modal.css">
+  <link rel="stylesheet" href="css/site.css">
+  <link rel="stylesheet" href="css/order.css">
+</head>
+<body class="booking">
+  <header class="nav scrolled" id="nav">
+    <div class="wrap nav-in">
+      <a href="index.html" class="logo" aria-label="ASTRO Projects"><img src="assets/astro-logo-white.webp" alt="ASTRO — Smart Technology Solutions" width="76" height="46"></a>
+      <ul class="nav-links">
+        <li><a href="index.html" data-i18n="nav.home">Home</a></li>
+        <li><a href="index.html#work" data-i18n="nav.projects">Projects</a></li>
+        <li><a href="world.html" data-i18n="nav.world">3D world</a></li>
+      </ul>
+      <div class="nav-actions">
+        <button class="btn lang" id="lang-toggle" type="button">عربي</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="order-page">
+    <div class="wrap narrow">
+      <div class="order-head">
+        <p class="eyebrow" data-i18n="order.eyebrow">New project request</p>
+        <h1 class="title"><span data-i18n="order.title">Book your</span> <em data-i18n="order.titleHL">project</em></h1>
+        <p class="lead" data-i18n="order.subtitle">Tell us about your project and we will get back to you within 24 hours with a tailored proposal.</p>
+      </div>
+
+      <div class="tabs2" role="tablist">
+        <button class="tab2 on" id="tab-new" role="tab" type="button" data-i18n="tab.new">New order</button>
+        <button class="tab2" id="tab-track" role="tab" type="button" data-i18n="tab.track">Track order</button>
+      </div>
+
+      <section id="view-new">
+        <div id="stepper" class="stepper" aria-label="Progress"></div>
+        <div class="card-form">
+          <div class="bar"><i id="bar-fill"></i></div>
+          <div id="form-body" class="form-body"></div>
+          <div id="form-foot" class="form-foot"></div>
+        </div>
+        <p class="terms" data-i18n="order.terms">By submitting you agree to be contacted about your request. We reply within 24 hours.</p>
+      </section>
+
+      <section id="view-track" hidden>
+        <div class="card-form">
+          <div class="form-body">
+            <h2 class="step-h" data-i18n="track.heading">Track your order</h2>
+            <p class="step-d" data-i18n="track.desc">Enter the code you received when you submitted your project.</p>
+            <form id="track-form" class="track-row">
+              <input id="track-code" class="inp mono" type="text" autocomplete="off" spellcheck="false" data-i18n-ph="track.ph" placeholder="e.g. AST-2026-K7Q2X">
+              <button class="btn primary" type="submit" data-i18n="track.btn">Track</button>
+            </form>
+            <div id="track-msg" class="msg" hidden></div>
+            <div id="track-result"></div>
+            <div id="track-recent"></div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer><div class="wrap"><span class="f-brand"><img src="assets/astro-symbol.webp" alt="" width="14" height="28"> © <span id="yr"></span> ASTRO Projects</span><span>New Damietta, Egypt</span></div></footer>
+  <canvas id="confetti" aria-hidden="true"></canvas>
+
+  <script src="js/data.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/booking-shared.js"></script>
+  <script src="js/i18n-order.js"></script>
+  <script type="module" src="js/cloud.js"></script>
+  <script src="js/order.js"></script>
+</body>
+</html>

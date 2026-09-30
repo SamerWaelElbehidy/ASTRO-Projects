@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Admin — ASTRO Projects</title>
+  <link rel="icon" type="image/png" href="assets/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/modal.css">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body class="admin">
+  <!-- Sign in -->
+  <section id="login" class="login">
+    <form id="login-form" class="login-card" autocomplete="on">
+      <img src="assets/astro-logo-white.webp" alt="ASTRO" width="120" height="72">
+      <h1>Admin</h1>
+      <p class="sub" id="login-sub">Sign in to manage bookings, referral codes and finished projects.</p>
+      <div id="local-note" class="note" hidden>Local demo mode — data lives only in this browser.</div>
+      <label>Email<input id="l-email" type="email" autocomplete="username" required></label>
+      <label>Password<input id="l-pass" type="password" autocomplete="current-password" required></label>
+      <div id="login-err" class="err" hidden></div>
+      <button class="btn primary lg" type="submit">Sign in</button>
+      <a class="back" href="index.html">← Back to site</a>
+    </form>
+  </section>
+
+  <!-- App -->
+  <div id="app" hidden>
+    <header class="top">
+      <a href="index.html" class="brand"><img src="assets/astro-logo-white.webp" alt="ASTRO" width="60" height="36"><span>Admin</span></a>
+      <nav class="tabs">
+        <button class="tab on" data-tab="orders" type="button">Orders <i id="n-orders">0</i></button>
+        <button class="tab" data-tab="referrals" type="button">Referrals <i id="n-refs">0</i></button>
+        <button class="tab" data-tab="projects" type="button">Published <i id="n-projects">0</i></button>
+      </nav>
+      <div class="who"><span id="who"></span><button class="btn" id="signout" type="button">Sign out</button></div>
+    </header>
+
+    <main class="wrap-a">
+      <div id="mode-banner" class="note" hidden>Local demo mode — nothing here is sent to the cloud.</div>
+
+      <section id="v-orders">
+        <div class="stats" id="stats"></div>
+        <div class="tools">
+          <input id="q" type="search" placeholder="Search by code, name, phone, university…">
+          <select id="f-status"><option value="">All statuses</option></select>
+          <button class="btn" id="export" type="button">Export CSV</button>
+          <button class="btn" id="reload" type="button">↻ Refresh</button>
+        </div>
+        <div class="table-wrap"><table id="orders-table"><thead><tr><th>Code</th><th>Date</th><th>Client</th><th>Project</th><th>Budget</th><th>Referral</th><th>Status</th></tr></thead><tbody></tbody></table></div>
+        <p class="empty" id="orders-empty" hidden>No orders yet.</p>
+      </section>
+
+      <section id="v-referrals" hidden>
+        <p class="lead-a">Every finished project earns its team a referral code. Someone who uses it gets <b class="pct"></b>% off their price and the team earns <b class="pct"></b>% commission.</p>
+        <div class="table-wrap"><table id="refs-table"><thead><tr><th>Code</th><th>Team</th><th>Source project</th><th>Uses</th><th>Commission earned</th><th>Paid</th><th>Due</th></tr></thead><tbody></tbody></table></div>
+        <p class="empty" id="refs-empty" hidden>No referral codes yet — they are created when you mark a project as finished.</p>
+      </section>
+
+      <section id="v-projects" hidden>
+        <p class="lead-a">Finished projects published to the site and the 3D world.</p>
+        <div id="pub-grid" class="pub-grid"></div>
+        <p class="empty" id="pub-empty" hidden>Nothing published yet.</p>
+      </section>
+    </main>
+  </div>
+
+  <!-- Order drawer -->
+  <div id="drawer-ov" class="ov" hidden><aside class="drawer" role="dialog" aria-modal="true"><div id="drawer-body"></div></aside></div>
+  <!-- Publish dialog -->
+  <div id="pub-ov" class="ov center" hidden><div class="dlg" role="dialog" aria-modal="true"><div id="pub-body"></div></div></div>
+
+  <script src="js/data.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/booking-shared.js"></script>
+  <script src="js/i18n-order.js"></script>
+  <script type="module" src="js/cloud.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>
