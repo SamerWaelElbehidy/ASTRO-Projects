@@ -213,7 +213,7 @@ footer .wrap { justify-content: center; text-align: center; gap: 0.4rem 2rem; }
 .burger[aria-expanded='true'] span:nth-child(2) { opacity: 0; }
 .burger[aria-expanded='true'] span:nth-child(3) { top: 21px; transform: rotate(-45deg); }
 @media (max-width: 1040px) { .burger { display: inline-block; } }
-.menu { position: fixed; z-index: 90; inset: 68px 0 0 0; background: rgba(5, 8, 15, 0.94); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); overflow-y: auto; opacity: 0; transform: translateY(-12px); transition: opacity 0.3s, transform 0.35s var(--ease); }
+.menu { position: fixed; z-index: 90; inset: 68px 0 0 0; background: rgba(5, 8, 15, 0.985); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); overflow-y: auto; opacity: 0; transform: translateY(-12px); transition: opacity 0.3s, transform 0.35s var(--ease); }
 .menu[hidden] { display: none; }
 .menu.open { opacity: 1; transform: none; }
 .menu-in { width: min(560px, 100% - 2rem); margin: 1.2rem auto 3rem; display: grid; gap: 0.6rem; }

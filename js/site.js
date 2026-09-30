@@ -185,18 +185,3 @@ window.PORTFOLIO.ready.then(function () {
 })();
 
 });
-
-/* Burger menu: quick jump to any section */
-(function () {
-  const btn = document.getElementById('burger'), menu = document.getElementById('menu'); if (!btn || !menu) return;
-  function set(open) {
-    btn.setAttribute('aria-expanded', String(open)); btn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
-    document.body.classList.toggle('menu-open', open);
-    if (open) { menu.hidden = false; requestAnimationFrame(() => menu.classList.add('open')); }
-    else { menu.classList.remove('open'); setTimeout(() => { if (btn.getAttribute('aria-expanded') === 'false') menu.hidden = true; }, 320); }
-  }
-  btn.addEventListener('click', () => set(btn.getAttribute('aria-expanded') !== 'true'));
-  menu.addEventListener('click', (e) => { if (e.target.closest('a')) set(false); });
-  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && btn.getAttribute('aria-expanded') === 'true') { set(false); btn.focus(); } });
-  addEventListener('resize', () => { if (innerWidth > 1040 && btn.getAttribute('aria-expanded') === 'true') set(false); });
-})();
