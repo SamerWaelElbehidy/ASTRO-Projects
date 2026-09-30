@@ -137,3 +137,28 @@ textarea.inp { resize: vertical; min-height: 130px; line-height: 1.55; }
 .chip2 { padding: 0.35rem 0.8rem; border-radius: 999px; border: 1px solid var(--line-2); background: transparent; font-size: 0.8rem; color: var(--text-2); direction: ltr; }
 .chip2:hover { border-color: var(--accent); color: #fff; }
 @media (max-width: 620px) { .booking .nav .btn.lang { display: inline-flex; } }
+
+/* Team members */
+.members { display: grid; gap: 0.9rem; margin-bottom: 0.9rem; }
+.mcard { padding: 1rem 1.1rem 0.3rem; border-radius: 16px; border: 1px solid var(--line-2); background: rgba(255, 255, 255, 0.02); transition: border-color 0.2s, background 0.2s; }
+.mcard.lead { border-color: rgba(255, 210, 63, 0.55); background: rgba(255, 210, 63, 0.05); }
+.mhead { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.8rem; flex-wrap: wrap; }
+.mhead .sp { flex: 1; }
+.m-badge { display: inline-flex; align-items: center; gap: 0.3rem; padding: 0.15rem 0.6rem; border-radius: 999px; background: rgba(255, 210, 63, 0.16); color: #ffd86b; font-style: normal; font-size: 0.72rem; font-weight: 600; }
+.pick { display: inline-flex; align-items: center; gap: 0.45rem; font-size: 0.8rem; color: var(--text-2); cursor: pointer; }
+.pick input { accent-color: var(--accent); width: 16px; height: 16px; }
+.ic-btn { width: 30px; height: 30px; display: grid; place-items: center; border-radius: 50%; border: 1px solid var(--line-2); background: transparent; color: var(--text-2); }
+.ic-btn:hover { color: #ff9fb0; border-color: rgba(255, 93, 122, 0.6); }
+.add-m { margin-bottom: 1.1rem; }
+.btn .ic-svg, .lbl .ic-svg, label .ic-svg { vertical-align: -0.2em; }
+.rv-members { display: grid; gap: 0.45rem; margin-top: 0.5rem; }
+.rvm { display: flex; flex-wrap: wrap; align-items: center; gap: 0.2rem 0.6rem; padding: 0.55rem 0.8rem; border-radius: 10px; border: 1px solid var(--line); }
+.rvm.lead { border-color: rgba(255, 210, 63, 0.5); background: rgba(255, 210, 63, 0.05); }
+.rvm span { color: var(--text-2); font-size: 0.82rem; flex-basis: 100%; }
+
+.ic-svg { display: inline-block; flex: none; vertical-align: -0.16em; }
+.type .ic .ic-svg, .st .dot .ic-svg { vertical-align: middle; }
+.ck .ic-svg { vertical-align: middle; }
+.tick .ic-svg, .tl-st i .ic-svg { vertical-align: middle; }
+.ref-status .ic-svg { vertical-align: -0.18em; }
+.rv-desc .rvm span { text-transform: none; letter-spacing: 0; font-size: 0.82rem; }

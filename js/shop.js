@@ -28,21 +28,21 @@ window.SHOP = (function () {
 
   return {
     slots: [
-      slot('paint', 'Paint', '●', paints),
-      slot('body', 'Body', '◭', bodies),
-      slot('rims', 'Wheels', '◎', rims),
-      slot('neon', 'Underglow', '✦', neon),
-      slot('lights', 'Headlights', '☀', lights),
-      slot('horn', 'Horn', '♪', horns),
-      slot('smoke', 'Tyre smoke', '☁', smoke)
+      slot('paint', 'Paint', 'palette', paints),
+      slot('body', 'Body', 'car', bodies),
+      slot('rims', 'Wheels', 'wheel', rims),
+      slot('neon', 'Underglow', 'sparkles', neon),
+      slot('lights', 'Headlights', 'sun', lights),
+      slot('horn', 'Horn', 'volume', horns),
+      slot('smoke', 'Tyre smoke', 'cloud', smoke)
     ],
     // one-off / levelled upgrades (each level must be bought in order)
     upgrades: [
-      { id: 'drift', name: 'Drift Kit', icon: '↯', desc: 'Unlocks real drifting (hold Space). Long drifts pay coins.', levels: [{ price: 500 }] },
-      { id: 'nitro', name: 'Nitrous', icon: '⚡', desc: 'Hold Shift for a huge speed boost. Higher levels = bigger tank.', levels: [{ price: 300, tank: 100 }, { price: 700, tank: 170 }, { price: 1200, tank: 260 }] },
-      { id: 'engine', name: 'Engine', icon: '⚙', desc: 'More acceleration and a higher top speed.', levels: [{ price: 300, speed: 1.1, acc: 1.08 }, { price: 650, speed: 1.2, acc: 1.16 }, { price: 1100, speed: 1.32, acc: 1.26 }] },
-      { id: 'flames', name: 'Exhaust Flames', icon: '♨', desc: 'Backfire pops when you lift off the throttle.', levels: [{ price: 350 }] },
-      { id: 'magnet', name: 'Coin Magnet', icon: '⌖', desc: 'Pulls nearby coins toward the car.', levels: [{ price: 400 }] }
+      { id: 'drift', name: 'Drift Kit', icon: 'wind', desc: 'Unlocks real drifting (hold Space). Long drifts pay coins.', levels: [{ price: 500 }] },
+      { id: 'nitro', name: 'Nitrous', icon: 'zap', desc: 'Hold Shift for a huge speed boost. Higher levels = bigger tank.', levels: [{ price: 300, tank: 100 }, { price: 700, tank: 170 }, { price: 1200, tank: 260 }] },
+      { id: 'engine', name: 'Engine', icon: 'cog', desc: 'More acceleration and a higher top speed.', levels: [{ price: 300, speed: 1.1, acc: 1.08 }, { price: 650, speed: 1.2, acc: 1.16 }, { price: 1100, speed: 1.32, acc: 1.26 }] },
+      { id: 'flames', name: 'Exhaust Flames', icon: 'flame', desc: 'Backfire pops when you lift off the throttle.', levels: [{ price: 350 }] },
+      { id: 'magnet', name: 'Coin Magnet', icon: 'magnet', desc: 'Pulls nearby coins toward the car.', levels: [{ price: 400 }] }
     ]
   };
 })();

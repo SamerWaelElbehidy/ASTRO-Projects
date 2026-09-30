@@ -20,7 +20,7 @@
   <div id="loader"><img class="ld-logo" src="assets/astro-symbol.webp" alt="" width="40" height="82"><p>Building the world…</p><div class="ld-bar"><i id="ld-fill"></i></div></div>
 
   <div class="hud" id="hud" hidden>
-    <a class="hud-back" href="index.html">← ASTRO Projects</a>
+    <a class="hud-back" href="index.html"><span data-icon="arrow-left" data-size="16"></span> ASTRO Projects</a>
     <div class="wallet-hud" id="wallet-hud" title="Projects discovered · coins"><span class="w-prog"><b id="wh-c">0</b> / <span id="wh-t"></span></span><span class="w-bar"><i id="wh-fill"></i></span><span class="w-coins"><i class="coin"></i><b id="wh-coins">0</b></span></div>
 
     <div class="hud-district" id="district"><small>Now entering</small><b></b></div>
@@ -28,11 +28,11 @@
     <div class="hud-right">
       <canvas id="minimap" width="220" height="220" aria-label="Map"></canvas>
       <div class="hud-btns">
-        <a href="order.html" class="ico gold" title="Book a project">📩 Book</a>
-        <button id="btn-shop" class="ico gold" title="Garage">🔧 Garage</button>
-        <button id="btn-map" class="ico" title="Districts &amp; search (Tab)">☰ Districts</button>
-        <button id="btn-cam" class="ico" title="Camera (C)">◎</button>
-        <button id="btn-snd" class="ico" title="Sound (M)">♪</button>
+        <a href="order.html" class="ico gold" title="Book a project"><span data-icon="send" data-size="15"></span> Book</a>
+        <button id="btn-shop" class="ico gold" title="Garage"><span data-icon="wrench" data-size="15"></span> Garage</button>
+        <button id="btn-map" class="ico" title="Districts &amp; search (Tab)"><span data-icon="map" data-size="15"></span> Districts</button>
+        <button id="btn-cam" class="ico" title="Camera (C)" aria-label="Camera"><span data-icon="camera" data-size="16"></span></button>
+        <button id="btn-snd" class="ico" title="Sound (M)" aria-label="Sound"><span data-icon="music" data-size="16"></span></button>
       </div>
     </div>
 
@@ -65,7 +65,7 @@
   <aside class="panel" id="panel" aria-hidden="true">
     <header>
       <b>Districts &amp; projects</b>
-      <button id="panel-x" class="ico" aria-label="Close">✕</button>
+      <button id="panel-x" class="ico" aria-label="Close"><span data-icon="x" data-size="16"></span></button>
     </header>
     <input id="pq" type="search" placeholder="Find a project and drive there…" aria-label="Search projects">
     <div id="plist"></div>
@@ -74,6 +74,7 @@
   <noscript><p style="padding:2rem">This interactive world needs JavaScript. <a href="index.html">Back to the portfolio</a>.</p></noscript>
 
   <script src="js/vendor/three.min.js"></script>
+  <script src="js/icons.js"></script>
   <script src="js/data.js"></script>
   <script src="js/config.js"></script>
   <script src="js/community.js"></script>

@@ -19,7 +19,8 @@ service cloud.firestore {
         && d.clientPhone is string && d.clientPhone.size() < 40
         && d.description is string && d.description.size() >= 20 && d.description.size() < 5000
         && !('pricing' in d) && !('referralIssued' in d) && !('publishedProjectId' in d)
-        && !('adminNotes' in d) && !('commissionPaid' in d);
+        && !('adminNotes' in d) && !('commissionPaid' in d)
+        && (!('members' in d) || (d.members is list && d.members.size() >= 1 && d.members.size() <= 12));
     }
 
     // Orders: anyone can place one; only the person who knows the secret code can read that single order (tracking);

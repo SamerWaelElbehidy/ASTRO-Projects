@@ -51,7 +51,7 @@
     if (p.links.github) links.push(`<a class="btn primary" href="${esc(p.links.github)}" target="_blank" rel="noopener">View on GitHub ↗</a>`);
     if (p.links.demo) links.push(`<a class="btn" href="${esc(p.links.demo)}" target="_blank" rel="noopener">Live demo ↗</a>`);
     box.innerHTML = `
-      <button class="pm-close" aria-label="Close">✕</button>
+      <button class="pm-close" aria-label="Close">${Icons.svg('x', 18)}</button>
       <div class="pm-head">
         <div class="pm-cats">${p.cats.map((id) => { const c = cat(id); return `<span class="chip" style="--c:${c.color}"><i class="dot"></i>${esc(c.name)}</span>`; }).join('')}</div>
         <h2 class="pm-title">${esc(p.name)}</h2>

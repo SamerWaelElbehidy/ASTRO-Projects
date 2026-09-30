@@ -34,15 +34,15 @@
   };
 
   const categories = [
-    { id: 'healthcare', name: 'Healthcare & Assistive Tech', short: 'Healthcare', color: '#ff5d7a', icon: '✚', blurb: 'Devices and models that help people move, see, hear, heal and be monitored.' },
-    { id: 'ai',         name: 'AI & Machine Learning',        short: 'AI / ML',    color: '#9b7bff', icon: '◈', blurb: 'Deep learning, classical ML and applied data science, trained and deployed.' },
-    { id: 'vision',     name: 'Computer Vision & Speech',     short: 'Vision',     color: '#33d6ff', icon: '◉', blurb: 'Systems that see, listen and understand: faces, plates, gaze, voice.' },
-    { id: 'iot',        name: 'Smart Spaces & IoT',           short: 'IoT',        color: '#3ddc97', icon: '⌂', blurb: 'Connected buildings, parking, labs and infrastructure built around ESP32 and STM32 nodes.' },
-    { id: 'agri',       name: 'Agriculture & Environment',    short: 'Agri',       color: '#9be15d', icon: '✿', blurb: 'Sensing and automation for plants, air quality and energy.' },
-    { id: 'robotics',   name: 'Robotics & Vehicles',          short: 'Robotics',   color: '#ff9f43', icon: '⚙', blurb: 'Line followers, fire-fighting cars, RC vehicles and closed-loop control.' },
-    { id: 'embedded',   name: 'Embedded & Electronics',       short: 'Embedded',   color: '#ffd23f', icon: '⌁', blurb: 'Firmware, custom peripherals and hardware experiments from the bench.' },
-    { id: 'web',        name: 'Web & Mobile Apps',            short: 'Web / Apps', color: '#4d8bff', icon: '▤', blurb: 'Full-stack products: marketplaces, stores, dashboards and mobile apps.' },
-    { id: 'interactive',name: 'Games & Interactive',          short: 'Interactive',color: '#ff6bd6', icon: '✦', blurb: 'Playful devices and interfaces: games, gloves, keyboards and air mice.' }
+    { id: 'healthcare', name: 'Healthcare & Assistive Tech', short: 'Healthcare', color: '#ff5d7a', icon: 'heart-pulse', blurb: 'Devices and models that help people move, see, hear, heal and be monitored.' },
+    { id: 'ai',         name: 'AI & Machine Learning',        short: 'AI / ML',    color: '#9b7bff', icon: 'sparkles', blurb: 'Deep learning, classical ML and applied data science, trained and deployed.' },
+    { id: 'vision',     name: 'Computer Vision & Speech',     short: 'Vision',     color: '#33d6ff', icon: 'eye', blurb: 'Systems that see, listen and understand: faces, plates, gaze, voice.' },
+    { id: 'iot',        name: 'Smart Spaces & IoT',           short: 'IoT',        color: '#3ddc97', icon: 'wifi', blurb: 'Connected buildings, parking, labs and infrastructure built around ESP32 and STM32 nodes.' },
+    { id: 'agri',       name: 'Agriculture & Environment',    short: 'Agri',       color: '#9be15d', icon: 'leaf', blurb: 'Sensing and automation for plants, air quality and energy.' },
+    { id: 'robotics',   name: 'Robotics & Vehicles',          short: 'Robotics',   color: '#ff9f43', icon: 'bot', blurb: 'Line followers, fire-fighting cars, RC vehicles and closed-loop control.' },
+    { id: 'embedded',   name: 'Embedded & Electronics',       short: 'Embedded',   color: '#ffd23f', icon: 'cpu', blurb: 'Firmware, custom peripherals and hardware experiments from the bench.' },
+    { id: 'web',        name: 'Web & Mobile Apps',            short: 'Web / Apps', color: '#4d8bff', icon: 'globe', blurb: 'Full-stack products: marketplaces, stores, dashboards and mobile apps.' },
+    { id: 'interactive',name: 'Games & Interactive',          short: 'Interactive',color: '#ff6bd6', icon: 'gamepad', blurb: 'Playful devices and interfaces: games, gloves, keyboards and air mice.' }
   ];
 
   const P = (o) => Object.assign({ featured: false, links: {}, status: 'Built' }, o);

@@ -236,7 +236,7 @@
     const tex = canvasTex(512, 160, (cx, w, h) => {
       cx.fillStyle = c.color; rr(cx, 4, 4, w - 8, h - 8, 26); cx.fill();
       cx.fillStyle = 'rgba(8,10,20,0.9)'; rr(cx, 12, 12, w - 24, h - 24, 20); cx.fill();
-      cx.fillStyle = c.color; cx.font = `700 60px ${FONT}`; cx.textAlign = 'left'; cx.fillText(c.icon, 34, 100);
+      Icons.draw(cx, c.icon, 66, 80, 48, c.color, 2.2); cx.textAlign = 'left';
       cx.fillStyle = '#fff'; cx.font = `600 34px ${FONT}`; wrapText(cx, c.name, 110, 70, w - 190, 38, 2);
       cx.fillStyle = c.color; cx.font = `700 46px ${FONT}`; cx.textAlign = 'right'; cx.fillText('→', w - 30, 100);
     });
@@ -347,7 +347,7 @@
       g.fillStyle = '#0a0d1b'; g.fillRect(0, 0, w, h);
       g.fillStyle = c.color; g.fillRect(0, 0, w, 10); g.fillRect(0, h - 10, w, 10);
       g.textAlign = 'center'; g.fillStyle = '#fff'; g.font = `700 78px ${FONT}`; g.fillText(c.name, w / 2, 110);
-      g.fillStyle = c.color; g.font = `500 32px 'JetBrains Mono', monospace`; g.fillText(`${c.icon}  ${d.list.length} PROJECTS  ${c.icon}`, w / 2, 160);
+      g.fillStyle = c.color; g.font = `500 32px 'JetBrains Mono', monospace`; g.fillText(`${d.list.length} PROJECTS`, w / 2, 160); Icons.draw(g, c.icon, 92, 104, 72, c.color, 2.2); Icons.draw(g, c.icon, w - 92, 104, 72, c.color, 2.2);
     });
     [0.78, -0.78].forEach((z, i) => { const s = new THREE.Mesh(new THREE.PlaneGeometry(14, 2.6), new THREE.MeshBasicMaterial({ map: ptex, toneMapped: false })); s.position.set(0, 11.4, z); if (i) s.rotation.y = Math.PI; portal.add(s); });
     shadowAll(portal, true);
@@ -893,7 +893,7 @@
       if (!items.length) return;
       const box = UI.el('div', 'pd'); const h = UI.el('h4', null, `<i style="background:${d.cat.color}"></i>${UI.esc(d.cat.name)}<button>Drive there →</button>`); h.style.setProperty('--c', d.cat.color);
       h.querySelector('button').addEventListener('click', () => teleportDistrict(d)); box.appendChild(h);
-      const ul = UI.el('ul'); items.forEach((l) => { const li = UI.el('li'); const b = UI.el('button', null, (Progress.isFound(l.p.id) ? '✓ ' : '') + UI.esc(l.p.name)); b.addEventListener('click', () => teleportTo(l)); li.appendChild(b); ul.appendChild(li); }); box.appendChild(ul); plist.appendChild(box);
+      const ul = UI.el('ul'); items.forEach((l) => { const li = UI.el('li'); const b = UI.el('button', null, (Progress.isFound(l.p.id) ? Icons.svg('check', 14, 'found-ic') + ' ' : '') + UI.esc(l.p.name)); b.addEventListener('click', () => teleportTo(l)); li.appendChild(b); ul.appendChild(li); }); box.appendChild(ul); plist.appendChild(box);
     });
   }
   function togglePanel(force) { const open = force == null ? !panel.classList.contains('open') : force; panel.classList.toggle('open', open); panel.setAttribute('aria-hidden', String(!open)); if (open && shopOpen) closeShop(); setPause('panel', open); if (open) { renderPanel(); if (!IS_TOUCH) setTimeout(() => pq.focus(), 350); } else pq.blur(); }
@@ -1048,7 +1048,7 @@
   /* ==================================================================== */
   const shopEl = UI.el('aside', 'panel shop');
   shopEl.setAttribute('aria-hidden', 'true');
-  shopEl.innerHTML = '<header><b>Garage</b><span class="shop-coins"><i class="coin"></i><b id="sh-coins">0</b></span><button class="ico" id="shop-x" aria-label="Close garage">✕</button></header><div class="tabs" id="tabs"></div><div class="shop-body" id="sbody"></div><footer class="shop-foot" id="sfoot"></footer>';
+  shopEl.innerHTML = '<header><b>Garage</b><span class="shop-coins"><i class="coin"></i><b id="sh-coins">0</b></span><button class="ico" id="shop-x" aria-label="Close garage">' + Icons.svg('x', 16) + '</button></header><div class="tabs" id="tabs"></div><div class="shop-body" id="sbody"></div><footer class="shop-foot" id="sfoot"></footer>';
   document.body.appendChild(shopEl);
   const tabsEl = shopEl.querySelector('#tabs'), bodyEl = shopEl.querySelector('#sbody'), footEl = shopEl.querySelector('#sfoot');
   let shopOpen = false, tab = 'paint', preview = null, showT = 0;
@@ -1066,8 +1066,8 @@
 
   function renderTabs() {
     tabsEl.innerHTML = '';
-    [...SH.slots.map((s) => [s.id, s.name, s.icon]), ['upgrades', 'Upgrades', '⚡']].forEach(([id, name, icon]) => {
-      const b = UI.el('button', 'tab' + (tab === id ? ' on' : ''), `<i>${icon}</i>${UI.esc(name)}`); b.type = 'button';
+    [...SH.slots.map((s) => [s.id, s.name, s.icon]), ['upgrades', 'Upgrades', 'zap']].forEach(([id, name, icon]) => {
+      const b = UI.el('button', 'tab' + (tab === id ? ' on' : ''), `<i>${Icons.svg(icon, 15)}</i>${UI.esc(name)}`); b.type = 'button';
       b.addEventListener('click', () => { if (preview) { preview = null; applyLook(); } tab = id; renderShop(); });
       tabsEl.appendChild(b);
     });
@@ -1082,7 +1082,7 @@
       const owned = isOwned(tab, it), on = preview ? preview.id === it.id : cur === it.id;
       const b = UI.el('button', 'sitem' + (on ? ' on' : '') + (owned ? ' owned' : ''), '');
       b.type = 'button';
-      const sw = it.color !== undefined || tab === 'neon' ? `<span class="sw" style="${swatchStyle(tab, it)}"></span>` : `<span class="sw txt">${tab === 'body' ? '◭' : '♪'}</span>`;
+      const sw = it.color !== undefined || tab === 'neon' ? `<span class="sw" style="${swatchStyle(tab, it)}"></span>` : `<span class="sw txt">${Icons.svg(tab === 'body' ? 'car' : 'volume', 20)}</span>`;
       b.innerHTML = `${sw}<span class="nm">${UI.esc(it.name)}</span><span class="pr">${cur === it.id && owned ? 'Equipped' : owned ? 'Owned' : `<i class="coin"></i>${Progress.fmt(it.price)}`}</span>${it.note ? `<small>${UI.esc(it.note)}</small>` : ''}`;
       b.addEventListener('click', () => {
         if (tab === 'horn') previewHorn(it.id);
@@ -1112,7 +1112,7 @@
       const lvl = u.levels.length > 1 ? levelOf(u.id, u.levels.length) : (Progress.owns(u.id + ':1') ? 1 : 0), max = u.levels.length, next = u.levels[lvl];
       const card = UI.el('div', 'up' + (lvl >= max ? ' max' : ''));
       const dots = max > 1 ? `<span class="dots">${u.levels.map((_, i) => `<i class="${i < lvl ? 'on' : ''}"></i>`).join('')}</span>` : '';
-      card.innerHTML = `<div class="ic">${u.icon}</div><div class="tx"><b>${UI.esc(u.name)}</b>${dots}<p>${UI.esc(u.desc)}</p></div>`;
+      card.innerHTML = `<div class="ic">${Icons.svg(u.icon, 22)}</div><div class="tx"><b>${UI.esc(u.name)}</b>${dots}<p>${UI.esc(u.desc)}</p></div>`;
       const btn = UI.el('button', 'btn' + (lvl >= max ? '' : ' primary'), lvl >= max ? 'Owned' : `${max > 1 ? 'Level ' + (lvl + 1) + ' · ' : ''}<i class="coin"></i>${Progress.fmt(next.price)}`);
       btn.type = 'button'; btn.disabled = lvl >= max;
       btn.addEventListener('click', () => {

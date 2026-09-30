@@ -43,7 +43,7 @@ window.PORTFOLIO.ready.then(function () {
       }
     });
     wrap.appendChild(cv);
-    wrap.appendChild(el('span', 'glyph', esc(c.icon)));
+    wrap.appendChild(el('span', 'glyph', Icons.svg(c.icon, 96)));
     return wrap;
   }
 
@@ -54,7 +54,7 @@ window.PORTFOLIO.ready.then(function () {
     b.type = 'button';
     b.setAttribute('aria-label', 'Open ' + p.name);
     b.appendChild(thumb(p, big ? 200 : 128));
-    if (p.featured) b.firstChild.appendChild(el('span', 'badge star', '★ Flagship'));
+    if (p.featured) b.firstChild.appendChild(el('span', 'badge star', Icons.svg('star', 12) + ' Flagship'));
     else if (p.status !== 'Built') b.firstChild.appendChild(el('span', 'badge', esc(p.status)));
     const body = el('div', 'body');
     body.innerHTML = `
@@ -79,7 +79,7 @@ window.PORTFOLIO.ready.then(function () {
     const d = el('button', 'domain rv');
     d.type = 'button';
     d.style.setProperty('--c', c.color);
-    d.innerHTML = `<div class="ic">${esc(c.icon)}</div><h4>${esc(c.name)}</h4><p>${esc(c.blurb)}</p><span class="n">${byCat(c.id).length} projects →</span>`;
+    d.innerHTML = `<div class="ic">${Icons.svg(c.icon, 22)}</div><h4>${esc(c.name)}</h4><p>${esc(c.blurb)}</p><span class="n">${byCat(c.id).length} projects →</span>`;
     d.addEventListener('click', () => { setCat(c.id); document.getElementById('work').scrollIntoView({ behavior: 'smooth' }); });
     dg.appendChild(d);
   });

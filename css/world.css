@@ -137,3 +137,10 @@ kbd { display: inline-block; min-width: 1.5em; padding: 0.05em 0.45em; margin-ri
 }
 
 .ld-logo { width: 44px; height: auto; animation: bob 0.9s ease-in-out infinite alternate; filter: drop-shadow(0 0 22px rgba(10, 114, 255, 0.6)); }
+
+.ico [data-icon], .hud-back [data-icon] { display: inline-flex; vertical-align: middle; }
+.ico { display: inline-flex; align-items: center; gap: 0.4rem; }
+.found-ic { color: #ffd86b; vertical-align: -0.15em; }
+.tab i .ic-svg { vertical-align: -0.2em; }
+.up .ic .ic-svg { vertical-align: middle; }
+.sitem .sw.txt .ic-svg { vertical-align: middle; }
