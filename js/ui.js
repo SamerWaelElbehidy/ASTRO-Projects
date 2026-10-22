@@ -34,10 +34,11 @@
     setTimeout(() => { t.classList.remove('in'); setTimeout(() => t.remove(), 500); }, ms || 3800);
   }
   const coin = '<i class="coin"></i>';
+  const t = (k, v) => window.I18N.t(k, v);
   function rewardToast(r) {
     const P = window.Progress;
-    toast(`${coin}<div><b>+${P.fmt(r.reward)}</b><span>${esc(r.project.name)} discovered · ${r.count} / ${r.total}</span></div>`, cat(r.project.cats[0]).color);
-    r.bonuses.forEach((b, i) => setTimeout(() => toast(`${coin}<div><b>+${P.fmt(b.amount)} bonus</b><span>${esc(b.label)}</span></div>`, b.color, 4600), 500 + i * 700));
+    toast(`${coin}<div><b>+${P.fmt(r.reward)}</b><span>${esc(r.project.name)} ${esc(t('modal.discovered'))} · ${r.count} / ${r.total}</span></div>`, cat(r.project.cats[0]).color);
+    r.bonuses.forEach((b, i) => setTimeout(() => toast(`${coin}<div><b>+${P.fmt(b.amount)} ${esc(t('modal.bonus'))}</b><span>${esc(b.label)}</span></div>`, b.color, 4600), 500 + i * 700));
   }
 
   function open(p, opts) {
@@ -48,21 +49,21 @@
     const main = cat(p.cats[0]);
     box.style.setProperty('--c', main.color);
     const links = [];
-    if (p.links.github) links.push(`<a class="btn primary" href="${esc(p.links.github)}" target="_blank" rel="noopener">View on GitHub ↗</a>`);
-    if (p.links.demo) links.push(`<a class="btn" href="${esc(p.links.demo)}" target="_blank" rel="noopener">Live demo ↗</a>`);
+    if (p.links.github) links.push(`<a class="btn primary" href="${esc(p.links.github)}" target="_blank" rel="noopener">${esc(t('modal.github'))}</a>`);
+    if (p.links.demo) links.push(`<a class="btn" href="${esc(p.links.demo)}" target="_blank" rel="noopener">${esc(t('modal.demo'))}</a>`);
     box.innerHTML = `
-      <button class="pm-close" aria-label="Close">${Icons.svg('x', 18)}</button>
+      <button class="pm-close" aria-label="${esc(t('modal.close'))}">${Icons.svg('x', 18)}</button>
       <div class="pm-head">
-        <div class="pm-cats">${p.cats.map((id) => { const c = cat(id); return `<span class="chip" style="--c:${c.color}"><i class="dot"></i>${esc(c.name)}</span>`; }).join('')}</div>
+        <div class="pm-cats">${p.cats.map((id) => { const c = cat(id); return `<span class="chip" style="--c:${c.color}"><i class="dot"></i>${esc(window.PORTFOLIO.catShort(c))}</span>`; }).join('')}</div>
         <h2 class="pm-title">${esc(p.name)}</h2>
         <p class="pm-tag">${esc(p.tagline)}</p>
       </div>
       <div class="pm-body">
         ${p.status && p.status !== 'Built' ? `<div class="pm-status">${esc(p.status)}</div>` : ''}
         <p class="pm-desc">${esc(p.desc)}</p>
-        ${p.points && p.points.length ? `<h3>What it does</h3><ul>${p.points.map((x) => `<li>${esc(x)}</li>`).join('')}</ul>` : ''}
-        <h3>Tech stack</h3>
-        <div class="pm-stack">${p.stack.map((t) => `<span class="tech">${esc(t)}</span>`).join('')}</div>
+        ${p.points && p.points.length ? `<h3>${esc(t('modal.whatItDoes'))}</h3><ul>${p.points.map((x) => `<li>${esc(x)}</li>`).join('')}</ul>` : ''}
+        <h3>${esc(t('modal.techStack'))}</h3>
+        <div class="pm-stack">${p.stack.map((x) => `<span class="tech">${esc(x)}</span>`).join('')}</div>
         ${links.length ? `<div class="pm-links">${links.join('')}</div>` : ''}
       </div>`;
     box.querySelector('.pm-close').addEventListener('click', close);

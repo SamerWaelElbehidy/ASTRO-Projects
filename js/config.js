@@ -2,6 +2,10 @@
 window.ASTRO_CONFIG = {
   whatsapp: '201068403242',
   referral: { discountPct: 5, commissionPct: 5 },
+  // ASTRO Store's backend — the single source of accounts, referral/discount
+  // codes and wallets, shared with astro-store-zeta.vercel.app. Project
+  // bookings, invites and the account pages on this site all go through it.
+  storeApi: 'https://astro-store-backend.onrender.com/api',
   // Firebase web config (public identifiers; access is enforced by Firestore rules — see docs/BOOKING-SETUP.md)
   firebase: {
     apiKey: 'AIzaSyDovh7wrlc5NimiAntQ8xMrl9NCacILnfI',

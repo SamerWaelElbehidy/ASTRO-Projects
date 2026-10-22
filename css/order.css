@@ -44,6 +44,36 @@
 .terms { text-align: center; color: var(--text-3); font-size: 0.82rem; margin-top: 1.1rem; }
 
 /* choices */
+.pick-wrap { display: none; position: relative; margin-bottom: 0.9rem; }
+.pick-select {
+  width: 100%; appearance: none; -webkit-appearance: none;
+  padding: 0.85rem 2.6rem 0.85rem 1rem; border-radius: 12px; border: 1px solid var(--line-2);
+  background: rgba(255, 255, 255, 0.04); color: var(--text); font: inherit; font-size: 0.95rem; font-weight: 600;
+  cursor: pointer; transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+}
+[dir='rtl'] .pick-select { padding: 0.85rem 1rem 0.85rem 2.6rem; }
+.pick-select:hover { border-color: rgba(255, 255, 255, 0.28); }
+.pick-select:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 4px rgba(10, 114, 255, 0.2); }
+.pick-select option { background: #12151f; color: var(--text); font-weight: 500; }
+/* custom chevron (replaces the browser's default arrow, which clashes with the rest of the UI) */
+.pick-wrap::after {
+  content: ''; position: absolute; inset-inline-end: 1rem; top: 50%; width: 10px; height: 10px;
+  transform: translateY(-65%) rotate(45deg); border: solid var(--text-2); border-width: 0 2px 2px 0;
+  pointer-events: none; transition: border-color 0.2s;
+}
+.pick-wrap:focus-within::after { border-color: var(--accent); }
+#type-preview:empty, #level-preview:empty { display: none; }
+.pick-preview-card {
+  display: flex; align-items: center; gap: 0.9rem; padding: 0.9rem 1rem; margin-bottom: 1.1rem;
+  border-radius: 14px; border: 1px solid var(--accent); background: rgba(10, 114, 255, 0.1);
+  box-shadow: 0 0 0 1px var(--accent) inset; animation: pickIn 0.25s var(--ease);
+}
+.pick-preview-card.sm { padding: 0.7rem 1rem; gap: 0.7rem; }
+.pick-preview-card .ic { flex: none; width: 40px; height: 40px; display: grid; place-items: center; border-radius: 11px; background: rgba(10, 114, 255, 0.18); color: var(--accent-2); }
+.pick-preview-card.sm .ic { width: 30px; height: 30px; color: var(--accent-2); }
+.pick-preview-card .tx b { display: block; font-size: 0.95rem; }
+.pick-preview-card .tx small { display: block; color: var(--text-2); font-size: 0.8rem; line-height: 1.4; margin-top: 0.15rem; }
+@keyframes pickIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
 .type-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 0.7rem; }
 .type { position: relative; display: flex; align-items: center; gap: 0.9rem; text-align: start; padding: 0.95rem 1rem; border-radius: 14px; border: 1px solid var(--line); background: rgba(255, 255, 255, 0.02); transition: transform 0.2s var(--ease), border-color 0.2s, background 0.2s; }
 .type:hover { transform: translateY(-2px); border-color: rgba(255, 255, 255, 0.28); }
@@ -57,6 +87,16 @@
 .lvl { position: relative; padding: 1rem 2.4rem 1rem 1rem; text-align: start; font-weight: 600; border-radius: 14px; border: 1px solid var(--line); background: rgba(255, 255, 255, 0.02); transition: all 0.2s; }
 [dir='rtl'] .lvl { padding: 1rem 1rem 1rem 2.4rem; }
 .lvl:hover { border-color: rgba(255, 255, 255, 0.28); }
+
+/* Below ~640px the grids above (minmax 260px/220px columns) can't shrink to
+   fit and spill past the form's edge — swap them for a plain dropdown instead
+   of fighting the grid down to phone widths. Must come after the base
+   .type-grid/.lvl-grid rules above: equal-specificity CSS resolves ties by
+   source order, not by which media query is narrower. */
+@media (max-width: 640px) {
+  .pick-wrap { display: block; }
+  .type-grid, .lvl-grid { display: none; }
+}
 
 /* fields */
 .fld { margin-bottom: 1rem; display: flex; flex-direction: column; gap: 0.4rem; }
@@ -78,6 +118,8 @@ textarea.inp { resize: vertical; min-height: 130px; line-height: 1.55; }
 .acts { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 0.8rem; }
 .ref-box { margin-top: 0.6rem; padding: 1rem; border-radius: 14px; border: 1px solid rgba(255, 210, 63, 0.35); background: rgba(255, 210, 63, 0.05); display: flex; flex-direction: column; gap: 0.5rem; }
 .ref-box .hint { margin: 0; font-size: 0.78rem; color: var(--text-3); }
+.ref-box.invite-note-box { border-color: rgba(10, 114, 255, 0.35); background: rgba(10, 114, 255, 0.05); margin-bottom: 1rem; }
+.ref-box.invite-note-box .hint { line-height: 1.6; }
 .ref-status { font-size: 0.85rem; padding: 0.45rem 0.7rem; border-radius: 10px; }
 .ref-status.ok { background: rgba(61, 220, 151, 0.12); color: #7ff0bd; }
 .ref-status.no { background: rgba(255, 93, 122, 0.12); color: #ff9fb0; }
@@ -87,8 +129,8 @@ textarea.inp { resize: vertical; min-height: 130px; line-height: 1.55; }
 .review { border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
 .rv { display: flex; justify-content: space-between; gap: 1rem; padding: 0.7rem 1rem; border-bottom: 1px solid var(--line); font-size: 0.9rem; }
 .rv:last-child { border-bottom: none; }
-.rv span { color: var(--text-3); }
-.rv b { font-weight: 600; text-align: end; }
+.rv span { color: var(--text-3); flex: none; }
+.rv b { font-weight: 600; text-align: end; min-width: 0; overflow-wrap: break-word; }
 .rv-desc { margin-top: 1rem; padding: 1rem; border: 1px solid var(--line); border-radius: 14px; }
 .rv-desc span { font-size: 0.75rem; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; }
 .rv-desc p { margin: 0.4rem 0 0; white-space: pre-wrap; color: var(--text-2); line-height: 1.6; }

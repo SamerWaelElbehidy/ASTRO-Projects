@@ -1,6 +1,8 @@
 /* Garage catalogue. Slots are exclusive (one equipped per slot); upgrades stack by level. */
 window.SHOP = (function () {
-  const slot = (id, name, icon, items) => ({ id, name, icon, items });
+  // name/desc stay as an English fallback; nameKey/descKey (resolved via
+  // window.I18N) is what the garage UI actually displays when set.
+  const slot = (id, name, icon, items) => ({ id, name, nameKey: 'shop.slot.' + id, icon, items });
   const paints = [
     ['astro', 'ASTRO Blue', '#0a72ff', 0], ['orange', 'Sunset Orange', '#ff7a2e', 0], ['crimson', 'Crimson', '#d81f3a', 150], ['blue', 'Electric Blue', '#2f6bff', 150],
     ['emerald', 'Emerald', '#12b886', 200], ['violet', 'Violet', '#8b5cf6', 200], ['pink', 'Hot Pink', '#ff5fb0', 250],
@@ -38,11 +40,11 @@ window.SHOP = (function () {
     ],
     // one-off / levelled upgrades (each level must be bought in order)
     upgrades: [
-      { id: 'drift', name: 'Drift Kit', icon: 'wind', desc: 'Unlocks real drifting (hold Space). Long drifts pay coins.', levels: [{ price: 500 }] },
-      { id: 'nitro', name: 'Nitrous', icon: 'zap', desc: 'Hold Shift for a huge speed boost. Higher levels = bigger tank.', levels: [{ price: 300, tank: 100 }, { price: 700, tank: 170 }, { price: 1200, tank: 260 }] },
-      { id: 'engine', name: 'Engine', icon: 'cog', desc: 'More acceleration and a higher top speed.', levels: [{ price: 300, speed: 1.1, acc: 1.08 }, { price: 650, speed: 1.2, acc: 1.16 }, { price: 1100, speed: 1.32, acc: 1.26 }] },
-      { id: 'flames', name: 'Exhaust Flames', icon: 'flame', desc: 'Backfire pops when you lift off the throttle.', levels: [{ price: 350 }] },
-      { id: 'magnet', name: 'Coin Magnet', icon: 'magnet', desc: 'Pulls nearby coins toward the car.', levels: [{ price: 400 }] }
+      { id: 'drift', name: 'Drift Kit', nameKey: 'shop.upgrade.drift.name', icon: 'wind', desc: 'Unlocks real drifting (hold Space). Long drifts pay coins.', descKey: 'shop.upgrade.drift.desc', levels: [{ price: 500 }] },
+      { id: 'nitro', name: 'Nitrous', nameKey: 'shop.upgrade.nitro.name', icon: 'zap', desc: 'Hold Shift for a huge speed boost. Higher levels = bigger tank.', descKey: 'shop.upgrade.nitro.desc', levels: [{ price: 300, tank: 100 }, { price: 700, tank: 170 }, { price: 1200, tank: 260 }] },
+      { id: 'engine', name: 'Engine', nameKey: 'shop.upgrade.engine.name', icon: 'cog', desc: 'More acceleration and a higher top speed.', descKey: 'shop.upgrade.engine.desc', levels: [{ price: 300, speed: 1.1, acc: 1.08 }, { price: 650, speed: 1.2, acc: 1.16 }, { price: 1100, speed: 1.32, acc: 1.26 }] },
+      { id: 'flames', name: 'Exhaust Flames', nameKey: 'shop.upgrade.flames.name', icon: 'flame', desc: 'Backfire pops when you lift off the throttle.', descKey: 'shop.upgrade.flames.desc', levels: [{ price: 350 }] },
+      { id: 'magnet', name: 'Coin Magnet', nameKey: 'shop.upgrade.magnet.name', icon: 'magnet', desc: 'Pulls nearby coins toward the car.', descKey: 'shop.upgrade.magnet.desc', levels: [{ price: 400 }] }
     ]
   };
 })();

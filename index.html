@@ -10,38 +10,41 @@
   <link rel="apple-touch-icon" href="assets/favicon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&family=Outfit:wght@600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/base.css?v=4">
-  <link rel="stylesheet" href="css/modal.css?v=4">
-  <link rel="stylesheet" href="css/site.css?v=4">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&family=Outfit:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/base.css?v=17">
+  <link rel="stylesheet" href="css/modal.css?v=17">
+  <link rel="stylesheet" href="css/site.css?v=17">
 </head>
 <body>
   <header class="nav" id="nav">
     <div class="wrap nav-in">
       <a href="#top" class="logo" aria-label="ASTRO Projects"><img src="assets/astro-logo-white.webp" alt="ASTRO — Smart Technology Solutions" width="76" height="46"></a>
       <ul class="nav-links">
-        <li><a href="#featured">Featured</a></li>
-        <li><a href="#domains">Domains</a></li>
-        <li><a href="#work">All projects</a></li>
-        <li><a href="#about">About</a></li>
-        <li><a href="order.html">Book a project</a></li>
-        <li><a href="#contact">Contact</a></li>
+        <li><a href="#featured" data-i18n="top.featured">Featured</a></li>
+        <li><a href="#domains" data-i18n="top.domains">Domains</a></li>
+        <li><a href="#work" data-i18n="top.all">All projects</a></li>
+        <li><a href="#about" data-i18n="top.about">About</a></li>
+        <li><a href="order.html" data-i18n="nav.book">Book a project</a></li>
+        <li><a href="#contact" data-i18n="top.contact">Contact</a></li>
       </ul>
-      <a class="wallet" id="wallet" href="world.html" title="Discover projects to earn coins, then spend them in the garage"><span class="w-prog"><b id="w-count">0</b> / <span id="w-total"></span></span><span class="w-bar"><i id="w-fill"></i></span><span class="w-coins"><i class="coin"></i><b id="w-coins">0</b></span></a>
-      <a class="btn primary nav-drive" href="world.html">Drive the 3D world →</a>
+      <a class="wallet" id="wallet" href="world.html" data-i18n-title="top.walletTitle" title="Discover projects to earn coins, then spend them in the garage"><span class="w-prog"><b id="w-count">0</b> / <span id="w-total"></span></span><span class="w-bar"><i id="w-fill"></i></span><span class="w-coins"><i class="coin"></i><b id="w-coins">0</b></span></a>
+      <span id="nav-account"></span>
+      <button class="btn lang" id="lang-toggle" type="button">عربي</button>
+      <a class="btn primary nav-drive" href="world.html" data-i18n="top.drive">Drive the 3D world →</a>
       <button class="burger" id="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="menu"><span></span><span></span><span></span></button>
     </div>
   </header>
 
   <nav class="menu" id="menu" aria-label="Quick links" hidden>
     <div class="menu-in">
-      <a href="#featured" class="mi"><span data-icon="star" data-size="20"></span><b>Featured projects</b><small>Our flagship work</small></a>
-      <a href="#domains" class="mi"><span data-icon="map" data-size="20"></span><b>Domains</b><small>Nine areas we work in</small></a>
-      <a href="#work" class="mi"><span data-icon="search" data-size="20"></span><b>All projects</b><small>Search and filter everything</small></a>
-      <a href="#about" class="mi"><span data-icon="user" data-size="20"></span><b>About ASTRO</b><small>Who we are</small></a>
-      <a href="order.html" class="mi gold"><span data-icon="send" data-size="20"></span><b>Book a project</b><small>Get a proposal within 24 hours</small></a>
-      <a href="world.html" class="mi"><span data-icon="car" data-size="20"></span><b>Drive the 3D world</b><small>Explore projects by car</small></a>
-      <a href="#contact" class="mi"><span data-icon="globe" data-size="20"></span><b>Contact</b><small>WhatsApp and Facebook</small></a>
+      <a href="#featured" class="mi"><span data-icon="star" data-size="20"></span><b data-i18n="menu.featured">Featured projects</b><small data-i18n="menu.featuredD">Our flagship work</small></a>
+      <a href="#domains" class="mi"><span data-icon="map" data-size="20"></span><b data-i18n="menu.domains">Domains</b><small data-i18n="menu.domainsD">Nine areas we work in</small></a>
+      <a href="#work" class="mi"><span data-icon="search" data-size="20"></span><b data-i18n="menu.all">All projects</b><small data-i18n="menu.allD">Search and filter everything</small></a>
+      <a href="#about" class="mi"><span data-icon="user" data-size="20"></span><b data-i18n="menu.about">About ASTRO</b><small data-i18n="menu.aboutD">Who we are</small></a>
+      <a href="order.html" class="mi gold"><span data-icon="send" data-size="20"></span><b data-i18n="menu.book">Book a project</b><small data-i18n="menu.bookD">Get a proposal within 24 hours</small></a>
+      <a href="world.html" class="mi"><span data-icon="car" data-size="20"></span><b data-i18n="menu.drive">Drive the 3D world</b><small data-i18n="menu.driveD">Explore projects by car</small></a>
+      <a href="account.html" class="mi"><span data-icon="user" data-size="20"></span><b data-i18n="menu.account">My account</b><small data-i18n="menu.accountD">Your projects, invitations &amp; discount code</small></a>
+      <a href="#contact" class="mi"><span data-icon="globe" data-size="20"></span><b data-i18n="menu.contact">Contact</b><small data-i18n="menu.contactD">WhatsApp and Facebook</small></a>
     </div>
   </nav>
 
@@ -49,47 +52,107 @@
     <section class="hero">
       <canvas id="net" aria-hidden="true"></canvas>
       <div class="wrap hero-in">
-        <div class="hero-pill"><b></b> ASTRO · Training &amp; Technical Development · New Damietta, Egypt</div>
+        <div class="hero-pill"><b></b> <span data-i18n="hero.pill">ASTRO · Training &amp; Technical Development · New Damietta, Egypt</span></div>
         <h1><span>ASTRO</span><br><span>Projects</span></h1>
         <p class="role" id="role"></p>
         <p class="lead" id="tagline"></p>
         <div class="hero-cta">
-          <a class="btn primary lg" href="world.html">Drive through our projects →</a>
-          <a class="btn lg" href="#work">Browse all projects</a>
-          <a class="btn lg gold-o" href="order.html"><span data-icon="send" data-size="16"></span> Book a project</a>
+          <a class="btn primary lg" href="world.html" data-i18n="hero.drive">Drive through our projects →</a>
+          <a class="btn lg" href="#work" data-i18n="hero.browse">Browse all projects</a>
+          <a class="btn lg gold-o" href="order.html"><span data-icon="send" data-size="16"></span> <span data-i18n="hero.book">Book a project</span></a>
         </div>
         <div class="hero-stats" id="stats"></div>
       </div>
-      <div class="scroll-hint">scroll</div>
+      <div class="scroll-hint" data-i18n="hero.scroll">scroll</div>
     </section>
 
     <section class="drive" aria-label="3D world">
       <div class="wrap">
-        <div class="drive-card rv">
+        <div class="drive-card reveal">
           <div>
-            <p class="eyebrow">Interactive</p>
-            <h3>Our projects, as a world you can drive through.</h3>
-            <p>Take the car for a spin. Every domain is its own district, every project a landmark — park next to one and press <b>Enter</b> to read its story. Works on phones with a joystick.</p>
-            <a class="btn primary lg" href="world.html">Start driving</a>
+            <p class="eyebrow" data-i18n="drive.eyebrow">Interactive</p>
+            <h3 data-i18n="drive.title">Our projects, as a world you can drive through.</h3>
+            <p data-i18n="drive.desc">Take the car for a spin. Every domain is its own district, every project a landmark — park next to one and press <b>Enter</b> to read its story. Works on phones with a joystick.</p>
+            <a class="btn primary lg" href="world.html" data-i18n="drive.start">Start driving</a>
           </div>
           <div class="drive-art" aria-hidden="true">
             <svg viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice">
               <defs>
-                <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#25336b"/><stop offset="1" stop-color="#e8875a"/></linearGradient>
+                <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0" stop-color="#0a0f28"/>
+                  <stop offset=".55" stop-color="#1a2456"/>
+                  <stop offset="1" stop-color="#2f3b7a"/>
+                </linearGradient>
+                <radialGradient id="sun" cx="50%" cy="50%" r="50%">
+                  <stop offset="0" stop-color="#fff7e0"/>
+                  <stop offset=".6" stop-color="#ffd9a0"/>
+                  <stop offset="1" stop-color="#ffb974" stop-opacity="0"/>
+                </radialGradient>
+                <linearGradient id="mtn1" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0" stop-color="#2a3570"/>
+                  <stop offset="1" stop-color="#1a2456"/>
+                </linearGradient>
+                <linearGradient id="mtn2" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0" stop-color="#171d44"/>
+                  <stop offset="1" stop-color="#0e1230"/>
+                </linearGradient>
+                <linearGradient id="road" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0" stop-color="#1e2650"/>
+                  <stop offset="1" stop-color="#0a0d22"/>
+                </linearGradient>
+                <linearGradient id="carBody" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0" stop-color="#3fa0ff"/>
+                  <stop offset="1" stop-color="#0a72ff"/>
+                </linearGradient>
+                <radialGradient id="headlight" cx="50%" cy="50%" r="50%">
+                  <stop offset="0" stop-color="#fff3b0"/>
+                  <stop offset="1" stop-color="#fff3b0" stop-opacity="0"/>
+                </radialGradient>
+                <radialGradient id="shadow" cx="50%" cy="50%" r="50%">
+                  <stop offset="0" stop-color="#000" stop-opacity=".45"/>
+                  <stop offset="1" stop-color="#000" stop-opacity="0"/>
+                </radialGradient>
               </defs>
+
               <rect width="320" height="180" fill="url(#sky)"/>
-              <circle cx="240" cy="92" r="30" fill="#ffd9a0" opacity=".85"/>
-              <path d="M0 118 L60 84 L110 112 L170 76 L230 110 L320 88 V180 H0Z" fill="#141b3a"/>
-              <path d="M0 180 V130 Q160 110 320 130 V180Z" fill="#1b2350"/>
-              <path d="M40 180 L150 128 H176 L286 180Z" fill="#2a2f45"/>
-              <path d="M163 128 L163 180" stroke="#ffd23f" stroke-width="2" stroke-dasharray="7 6"/>
-              <g transform="translate(120 138)">
-                <rect x="0" y="8" width="60" height="16" rx="5" fill="#ff9f43"/>
-                <path d="M12 8 L20 0 H42 L50 8Z" fill="#ffb974"/>
-                <circle cx="14" cy="26" r="6" fill="#111"/><circle cx="46" cy="26" r="6" fill="#111"/>
-                <rect x="53" y="12" width="6" height="4" fill="#fff3b0"/>
+
+              <g fill="#fff" opacity=".7">
+                <circle cx="26" cy="20" r=".8"/><circle cx="58" cy="34" r=".6"/><circle cx="94" cy="14" r=".9"/>
+                <circle cx="132" cy="28" r=".6"/><circle cx="176" cy="16" r=".8"/><circle cx="210" cy="30" r=".6"/>
+                <circle cx="44" cy="46" r=".6"/><circle cx="294" cy="22" r=".8"/><circle cx="270" cy="40" r=".6"/>
               </g>
-              <g fill="#3ddc97"><rect x="30" y="98" width="6" height="26"/><rect x="286" y="102" width="6" height="22"/></g>
+
+              <circle cx="238" cy="78" r="46" fill="url(#sun)"/>
+              <circle cx="238" cy="78" r="21" fill="#ffe9c2"/>
+
+              <path d="M0 120 L46 92 L78 110 L128 78 L168 102 L214 70 L256 100 L320 82 V180 H0Z" fill="url(#mtn1)"/>
+              <path d="M0 140 L36 118 L92 132 L150 104 L196 126 L246 100 L320 118 V180 H0Z" fill="url(#mtn2)"/>
+
+              <path d="M0 150 V180 H320 V150 Q160 134 0 150Z" fill="#111631"/>
+              <path d="M58 180 L142 136 H178 L262 180Z" fill="url(#road)"/>
+              <path d="M58 180 L142 136 H149 L72 180Z" fill="#2a3360" opacity=".5"/>
+              <path d="M160 136 L160 180" stroke="#ffd23f" stroke-width="2.4" stroke-linecap="round" stroke-dasharray="8 8" opacity=".9"/>
+
+              <g fill="#33d6ff">
+                <rect x="30" y="114" width="3" height="20" rx="1.5" opacity=".85"/>
+                <rect x="287" y="118" width="3" height="18" rx="1.5" opacity=".85"/>
+              </g>
+              <g fill="#3ddc97">
+                <circle cx="31.5" cy="112" r="2.4"/><circle cx="288.5" cy="116" r="2.4"/>
+              </g>
+
+              <ellipse cx="160" cy="166" rx="46" ry="7" fill="url(#shadow)"/>
+
+              <g transform="translate(110 134)">
+                <path d="M4 26 Q2 12 16 6 L34 6 Q42 -2 58 -2 Q74 -2 82 6 L96 6 Q106 10 106 20 L106 30 Q106 34 102 34 L8 34 Q4 34 4 30Z" fill="url(#carBody)"/>
+                <path d="M36 6 Q44 -8 58 -8 Q72 -8 80 6Z" fill="#c9e6ff" opacity=".9"/>
+                <path d="M4 26 Q2 12 16 6 L34 6 L30 26Z" fill="#0a72ff" opacity=".55"/>
+                <circle cx="26" cy="34" r="8.5" fill="#0b0e1c"/><circle cx="26" cy="34" r="3.4" fill="#2a3360"/>
+                <circle cx="88" cy="34" r="8.5" fill="#0b0e1c"/><circle cx="88" cy="34" r="3.4" fill="#2a3360"/>
+                <rect x="96" y="12" width="10" height="5" rx="2" fill="#fff3b0"/>
+                <circle cx="108" cy="15" r="7" fill="url(#headlight)"/>
+                <rect x="2" y="16" width="6" height="4" rx="1.5" fill="#ff5d7a"/>
+              </g>
             </svg>
           </div>
         </div>
@@ -98,41 +161,41 @@
 
     <section id="featured">
       <div class="wrap">
-        <p class="eyebrow">Selected work</p>
-        <h2 class="title">Flagship projects</h2>
-        <p class="lead">Systems that combine models, sensors, firmware and software into something that works in the physical world.</p>
+        <p class="eyebrow" data-i18n="sec.featured.eyebrow">Selected work</p>
+        <h2 class="title" data-i18n="sec.featured.title">Flagship projects</h2>
+        <p class="lead" data-i18n="sec.featured.lead">Systems that combine models, sensors, firmware and software into something that works in the physical world.</p>
         <div class="featured-grid" id="featured-grid" style="margin-top:2.4rem"></div>
       </div>
     </section>
 
     <section id="domains">
       <div class="wrap">
-        <p class="eyebrow">Domains</p>
-        <h2 class="title">Nine areas, one thread.</h2>
-        <p class="lead">Most projects live in more than one domain — an eye-controlled wheelchair is healthcare, robotics, vision and IoT at once — so they show up in each.</p>
+        <p class="eyebrow" data-i18n="sec.domains.eyebrow">Domains</p>
+        <h2 class="title" data-i18n="sec.domains.title">Nine areas, one thread.</h2>
+        <p class="lead" data-i18n="sec.domains.lead">Most projects live in more than one domain — an eye-controlled wheelchair is healthcare, robotics, vision and IoT at once — so they show up in each.</p>
         <div class="domains" id="domains-grid"></div>
       </div>
     </section>
 
     <section id="work">
       <div class="wrap">
-        <p class="eyebrow">Everything</p>
-        <h2 class="title">All projects</h2>
+        <p class="eyebrow" data-i18n="sec.work.eyebrow">Everything</p>
+        <h2 class="title" data-i18n="sec.work.title">All projects</h2>
         <div class="tools">
-          <label class="search"><input id="q" type="search" placeholder="Search projects, sensors, frameworks…" aria-label="Search projects"></label>
+          <label class="search"><input id="q" type="search" data-i18n-ph="sec.work.searchPh" placeholder="Search projects, sensors, frameworks…" aria-label="Search projects"></label>
           <span class="count" id="count"></span>
         </div>
         <div class="filters" id="filters" role="group" aria-label="Filter by domain"></div>
         <div class="grid" id="grid" style="margin-top:1.6rem"></div>
-        <div class="empty" id="empty" hidden>No project matches that search.</div>
+        <div class="empty" id="empty" hidden data-i18n="sec.work.empty">No project matches that search.</div>
       </div>
     </section>
 
     <section id="about">
       <div class="wrap">
-        <p class="eyebrow">About ASTRO</p>
-        <h2 class="title">We teach it. We build it.</h2>
-        <p class="lead">ASTRO is a training and technical-development studio in New Damietta, Egypt. We teach robotics, electronics and embedded systems by building real projects — and we build them ourselves, from the first sketch to the last line of firmware.</p>
+        <p class="eyebrow" data-i18n="sec.about.eyebrow">About ASTRO</p>
+        <h2 class="title" data-i18n="sec.about.title">We teach it. We build it.</h2>
+        <p class="lead" data-i18n="sec.about.lead">ASTRO is a training and technical-development studio in New Damietta, Egypt. We teach robotics, electronics and embedded systems by building real projects — and we build them ourselves, from the first sketch to the last line of firmware.</p>
         <div class="roles" id="roles"></div>
         <div class="about-grid">
           <div class="skills" id="skills"></div>
@@ -142,13 +205,13 @@
 
     <section id="book" class="book">
       <div class="wrap">
-        <div class="book-card rv">
-          <p class="eyebrow">Book a project</p>
-          <h2 class="title">Have a project in mind?</h2>
-          <p class="lead">Graduation, research, IoT, AI, robotics, embedded, mobile or web — tell us about it and get a tailored proposal within 24 hours. Finished projects join our 3D world, and your team gets a referral code: a friend who uses it gets 5% off and your team earns 5%.</p>
+        <div class="book-card reveal">
+          <p class="eyebrow" data-i18n="sec.book.eyebrow">Book a project</p>
+          <h2 class="title" data-i18n="sec.book.title">Have a project in mind?</h2>
+          <p class="lead" data-i18n="sec.book.lead">Graduation, research, IoT, AI, robotics, embedded, mobile or web — tell us about it and get a tailored proposal within 24 hours. Finished projects join our 3D world, and your team gets a referral code: a friend who uses it gets 5% off and your team earns 5%.</p>
           <div class="book-cta">
-            <a class="btn primary lg" href="order.html">Book your project →</a>
-            <a class="btn lg" href="order.html#track">Track an order</a>
+            <a class="btn primary lg" href="order.html" data-i18n="sec.book.cta">Book your project →</a>
+            <a class="btn lg" href="account.html#projects" data-i18n="sec.book.track">My projects</a>
           </div>
         </div>
       </div>
@@ -156,25 +219,27 @@
 
     <section id="contact">
       <div class="wrap">
-        <div class="contact-card rv">
-          <p class="eyebrow">Contact</p>
-          <h2>Let’s build something that moves.</h2>
-          <p class="lead">Courses, custom projects and components — reach out to the ASTRO team.</p>
+        <div class="contact-card reveal">
+          <p class="eyebrow" data-i18n="sec.contact.eyebrow">Contact</p>
+          <h2 data-i18n="sec.contact.title">Let’s build something that moves.</h2>
+          <p class="lead" data-i18n="sec.contact.lead">Courses, custom projects and components — reach out to the ASTRO team.</p>
           <div class="contact-links" id="contact-links"></div>
         </div>
       </div>
     </section>
   </main>
 
-  <footer><div class="wrap"><span class="f-brand"><img src="assets/astro-symbol.webp" alt="" width="14" height="28"> © <span id="yr"></span> ASTRO Projects</span><span>New Damietta, Egypt</span></div></footer>
+  <footer><div class="wrap"><span class="f-brand"><img src="assets/astro-symbol.webp" alt="" width="14" height="28"> © <span id="yr"></span> ASTRO Projects</span><span data-i18n="footer.loc">New Damietta, Egypt</span></div></footer>
 
-  <script src="js/icons.js?v=4"></script>
-  <script src="js/data.js?v=4"></script>
-  <script src="js/config.js?v=4"></script>
-  <script src="js/community.js?v=4"></script>
-  <script src="js/progress.js?v=4"></script>
-  <script src="js/ui.js?v=4"></script>
-  <script src="js/site.js?v=4"></script>
-  <script src="js/menu.js?v=4"></script>
+  <script src="js/icons.js?v=17"></script>
+  <script src="js/data.js?v=17"></script>
+  <script src="js/config.js?v=17"></script>
+  <script src="js/i18n-order.js?v=17"></script>
+  <script src="js/store-auth.js?v=17"></script>
+  <script src="js/community.js?v=17"></script>
+  <script src="js/progress.js?v=17"></script>
+  <script src="js/ui.js?v=17"></script>
+  <script src="js/site.js?v=17"></script>
+  <script src="js/menu.js?v=17"></script>
 </body>
 </html>

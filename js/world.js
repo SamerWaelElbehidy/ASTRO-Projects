@@ -5,6 +5,7 @@
 (async function () {
   'use strict';
   await window.PORTFOLIO.ready;
+  const PF = window.PORTFOLIO;
   const { categories, projects, byCat, cat } = window.PORTFOLIO;
   const UI = window.PortfolioUI;
   const $ = (s) => document.querySelector(s);
@@ -825,6 +826,10 @@
   const el = { spd: $('#spd'), prompt: $('#prompt'), district: $('#district'), hud: $('#hud'), mini: $('#minimap') };
   const promptTxt = el.prompt.querySelector('.txt');
   let currentDistrict = null, bannerT = 0;
+  const t = (k, v) => window.I18N.t(k, v);
+  window.I18N.apply();
+  const langBtn = $('#lang-toggle'); if (langBtn) langBtn.addEventListener('click', () => window.I18N.setLang(window.I18N.lang === 'ar' ? 'en' : 'ar'));
+  window.I18N.onChange(() => { currentDistrict = null; if (panel.classList.contains('open')) renderPanel(); if (shopOpen) renderShop(); });
 
   function openNear() { if (paused) return; if (!nearest && nearGarage) { openShop(); return; } if (!nearest) return; setPause('modal', true); horn(false); UI.open(nearest.p, { onClose: () => setPause('modal', false), onDiscover: (r) => markFound(r.project.id) }); }
   el.prompt.addEventListener('click', openNear);
@@ -849,7 +854,7 @@
     nearest = best && bd < 8.5 * 8.5 ? best : null;
     nearGarage = Math.hypot(car.x - GARAGE.fx, car.z - GARAGE.fz) < 9;
     const show = (!!nearest || nearGarage) && !paused;
-    if (show) { if (nearest) { promptTxt.textContent = nearest.p.name; el.prompt.style.setProperty('--c', nearest.d.cat.color); } else { promptTxt.textContent = 'Garage — customize your car'; el.prompt.style.setProperty('--c', '#ffd23f'); } }
+    if (show) { if (nearest) { promptTxt.textContent = nearest.p.name; el.prompt.style.setProperty('--c', nearest.d.cat.color); } else { promptTxt.textContent = t('w.garagePrompt'); el.prompt.style.setProperty('--c', '#ffd23f'); } }
     el.prompt.classList.toggle('show', show); el.prompt.hidden = false; el.prompt.style.pointerEvents = show ? 'auto' : 'none';
     if (IS_TOUCH) $('#t-open').style.opacity = (nearest || nearGarage) ? 1 : 0.45;
 
@@ -858,7 +863,7 @@
     if (Math.hypot(car.x, car.z) < PLAZA_R) inD = { plaza: true };
     if (inD !== currentDistrict) {
       currentDistrict = inD;
-      if (inD) { const b = el.district.querySelector('b'); const sm = el.district.querySelector('small'); if (inD.plaza) { sm.textContent = 'Central plaza'; b.textContent = 'ASTRO Projects'; b.style.color = '#fff'; } else { sm.textContent = 'Now entering'; b.textContent = inD.cat.name; b.style.color = inD.cat.color; } el.district.classList.add('show'); bannerT = 3.2; }
+      if (inD) { const b = el.district.querySelector('b'); const sm = el.district.querySelector('small'); if (inD.plaza) { sm.textContent = t('w.centralPlaza'); b.textContent = t('w.back'); b.style.color = '#fff'; } else { sm.textContent = t('w.nowEntering'); b.textContent = PF.catName(inD.cat); b.style.color = inD.cat.color; } el.district.classList.add('show'); bannerT = 3.2; }
     }
     if (bannerT > 0) { bannerT -= dt; if (bannerT <= 0) el.district.classList.remove('show'); }
   }
@@ -891,7 +896,7 @@
     districts.forEach((d) => {
       const items = landmarks.filter((l) => l.d === d && (!q || (l.p.name + l.p.tagline + l.p.stack.join(' ')).toLowerCase().includes(q)));
       if (!items.length) return;
-      const box = UI.el('div', 'pd'); const h = UI.el('h4', null, `<i style="background:${d.cat.color}"></i>${UI.esc(d.cat.name)}<button>Drive there →</button>`); h.style.setProperty('--c', d.cat.color);
+      const box = UI.el('div', 'pd'); const h = UI.el('h4', null, `<i style="background:${d.cat.color}"></i>${UI.esc(PF.catName(d.cat))}<button>${UI.esc(t('w.driveThere'))}</button>`); h.style.setProperty('--c', d.cat.color);
       h.querySelector('button').addEventListener('click', () => teleportDistrict(d)); box.appendChild(h);
       const ul = UI.el('ul'); items.forEach((l) => { const li = UI.el('li'); const b = UI.el('button', null, (Progress.isFound(l.p.id) ? Icons.svg('check', 14, 'found-ic') + ' ' : '') + UI.esc(l.p.name)); b.addEventListener('click', () => teleportTo(l)); li.appendChild(b); ul.appendChild(li); }); box.appendChild(ul); plist.appendChild(box);
     });
@@ -1030,8 +1035,8 @@
     // drift bonus
     const drifting = upg.drift && input.drift && car.drift > 0.5 && sp > 8;
     if (drifting) { driftScore += dt * sp * 1.4; driftIdle = 0; }
-    else { driftIdle += dt; if (driftScore > 0 && driftIdle > 0.8) { const c = Math.floor(driftScore / 35); if (c > 0) { Progress.add(c); UI.toast(`<i class="coin"></i><div><b>+${c}</b><span>Drift bonus</span></div>`, '#ff9f43', 2200); chime(); bump(); } driftScore = 0; } }
-    wh.drift.textContent = driftScore > 12 ? 'DRIFT ' + Math.floor(driftScore) : '';
+    else { driftIdle += dt; if (driftScore > 0 && driftIdle > 0.8) { const c = Math.floor(driftScore / 35); if (c > 0) { Progress.add(c); UI.toast(`<i class="coin"></i><div><b>+${c}</b><span>${UI.esc(t('shop.driftBonus'))}</span></div>`, '#ff9f43', 2200); chime(); bump(); } driftScore = 0; } }
+    wh.drift.textContent = driftScore > 12 ? t('w.driftMeter') + ' ' + Math.floor(driftScore) : '';
     // exhaust pops
     popCool -= dt;
     if (upg.flames && prevThrottle > 0.5 && input.throttle === 0 && sp > 12 && popCool <= 0) {
@@ -1048,7 +1053,8 @@
   /* ==================================================================== */
   const shopEl = UI.el('aside', 'panel shop');
   shopEl.setAttribute('aria-hidden', 'true');
-  shopEl.innerHTML = '<header><b>Garage</b><span class="shop-coins"><i class="coin"></i><b id="sh-coins">0</b></span><button class="ico" id="shop-x" aria-label="Close garage">' + Icons.svg('x', 16) + '</button></header><div class="tabs" id="tabs"></div><div class="shop-body" id="sbody"></div><footer class="shop-foot" id="sfoot"></footer>';
+  shopEl.innerHTML = '<header><b>' + UI.esc(t('w.garage')) + '</b><span class="shop-coins"><i class="coin"></i><b id="sh-coins">0</b></span><button class="ico" id="shop-x" aria-label="' + UI.esc(t('w.closeGarage')) + '">' + Icons.svg('x', 16) + '</button></header><div class="tabs" id="tabs"></div><div class="shop-body" id="sbody"></div><footer class="shop-foot" id="sfoot"></footer>';
+  window.I18N.onChange(() => { const b = shopEl.querySelector('header b'); if (b) b.textContent = t('w.garage'); });
   document.body.appendChild(shopEl);
   const tabsEl = shopEl.querySelector('#tabs'), bodyEl = shopEl.querySelector('#sbody'), footEl = shopEl.querySelector('#sfoot');
   let shopOpen = false, tab = 'paint', preview = null, showT = 0;
@@ -1064,9 +1070,12 @@
     return '';
   }
 
+  const tn = (o) => o.nameKey ? t(o.nameKey, o.name) : o.name;
+  const td = (o) => o.descKey ? t(o.descKey, o.desc) : o.desc;
+
   function renderTabs() {
     tabsEl.innerHTML = '';
-    [...SH.slots.map((s) => [s.id, s.name, s.icon]), ['upgrades', 'Upgrades', 'zap']].forEach(([id, name, icon]) => {
+    [...SH.slots.map((s) => [s.id, tn(s), s.icon]), ['upgrades', t('shop.tab.upgrades'), 'zap']].forEach(([id, name, icon]) => {
       const b = UI.el('button', 'tab' + (tab === id ? ' on' : ''), `<i>${Icons.svg(icon, 15)}</i>${UI.esc(name)}`); b.type = 'button';
       b.addEventListener('click', () => { if (preview) { preview = null; applyLook(); } tab = id; renderShop(); });
       tabsEl.appendChild(b);
@@ -1083,7 +1092,7 @@
       const b = UI.el('button', 'sitem' + (on ? ' on' : '') + (owned ? ' owned' : ''), '');
       b.type = 'button';
       const sw = it.color !== undefined || tab === 'neon' ? `<span class="sw" style="${swatchStyle(tab, it)}"></span>` : `<span class="sw txt">${Icons.svg(tab === 'body' ? 'car' : 'volume', 20)}</span>`;
-      b.innerHTML = `${sw}<span class="nm">${UI.esc(it.name)}</span><span class="pr">${cur === it.id && owned ? 'Equipped' : owned ? 'Owned' : `<i class="coin"></i>${Progress.fmt(it.price)}`}</span>${it.note ? `<small>${UI.esc(it.note)}</small>` : ''}`;
+      b.innerHTML = `${sw}<span class="nm">${UI.esc(it.name)}</span><span class="pr">${cur === it.id && owned ? UI.esc(t('shop.equipped')) : owned ? UI.esc(t('shop.owned')) : `<i class="coin"></i>${Progress.fmt(it.price)}`}</span>${it.note ? `<small>${UI.esc(it.note)}</small>` : ''}`;
       b.addEventListener('click', () => {
         if (tab === 'horn') previewHorn(it.id);
         if (owned) { Progress.equip(tab, it.id); preview = null; applyLook(); chime(); }
@@ -1095,15 +1104,15 @@
     bodyEl.appendChild(grid);
     if (preview) {
       const it = shopItem(tab, preview.id), afford = Progress.coins() >= it.price;
-      footEl.innerHTML = `<div class="buy"><div><b>${UI.esc(it.name)}</b><span>Previewing on your car</span></div><button class="btn primary${afford ? '' : ' off'}" id="buy">Buy · <i class="coin"></i>${Progress.fmt(it.price)}</button><button class="btn" id="cancel">Cancel</button></div>`;
+      footEl.innerHTML = `<div class="buy"><div><b>${UI.esc(it.name)}</b><span>${UI.esc(t('shop.previewing'))}</span></div><button class="btn primary${afford ? '' : ' off'}" id="buy">${UI.esc(t('shop.buy'))} <i class="coin"></i>${Progress.fmt(it.price)}</button><button class="btn" id="cancel">${UI.esc(t('shop.cancel'))}</button></div>`;
       footEl.querySelector('#cancel').addEventListener('click', () => { preview = null; applyLook(); renderShop(); });
       footEl.querySelector('#buy').addEventListener('click', () => {
-        if (!afford) { UI.toast(`<i class="coin"></i><div><b>Not enough coins</b><span>Need ${Progress.fmt(it.price - Progress.coins())} more — open projects and collect coins</span></div>`, '#ff5d7a', 3200); return; }
+        if (!afford) { UI.toast(`<i class="coin"></i><div><b>${UI.esc(t('shop.notEnough'))}</b><span>${UI.esc(t('shop.needMore', { n: Progress.fmt(it.price - Progress.coins()) }))}</span></div>`, '#ff5d7a', 3200); return; }
         Progress.spend(it.price); Progress.own(tab + ':' + it.id); Progress.equip(tab, it.id); preview = null; applyLook(); chime(); bump();
-        UI.toast(`<i class="coin"></i><div><b>${UI.esc(it.name)}</b><span>Purchased and equipped</span></div>`, '#3ddc97', 2600); renderShop();
+        UI.toast(`<i class="coin"></i><div><b>${UI.esc(it.name)}</b><span>${UI.esc(t('shop.purchased'))}</span></div>`, '#3ddc97', 2600); renderShop();
       });
-    } else footEl.innerHTML = '<p class="tip">Tap an item to preview it on your car. Earn coins by opening projects and collecting coins in the world.</p><button class="link" id="reset">Reset progress</button>';
-    const rs = footEl.querySelector('#reset'); if (rs) rs.addEventListener('click', () => { if (confirm('Reset all discovered projects, coins and purchases?')) { Progress.reset(); preview = null; refreshUpgrades(true); COINS.forEach((c) => { c.gone = false; }); landmarks.forEach((lm) => { lm.top.material.color.set(lm.d.cat.color); lm.halo.material.color.set(lm.d.cat.color); }); applyLook(); renderShop(); } });
+    } else footEl.innerHTML = `<p class="tip">${UI.esc(t('shop.tip'))}</p><button class="link" id="reset">${UI.esc(t('shop.resetProgress'))}</button>`;
+    const rs = footEl.querySelector('#reset'); if (rs) rs.addEventListener('click', () => { if (confirm(t('w.resetConfirm'))) { Progress.reset(); preview = null; refreshUpgrades(true); COINS.forEach((c) => { c.gone = false; }); landmarks.forEach((lm) => { lm.top.material.color.set(lm.d.cat.color); lm.halo.material.color.set(lm.d.cat.color); }); applyLook(); renderShop(); } });
   }
 
   function renderUpgrades() {
@@ -1112,18 +1121,18 @@
       const lvl = u.levels.length > 1 ? levelOf(u.id, u.levels.length) : (Progress.owns(u.id + ':1') ? 1 : 0), max = u.levels.length, next = u.levels[lvl];
       const card = UI.el('div', 'up' + (lvl >= max ? ' max' : ''));
       const dots = max > 1 ? `<span class="dots">${u.levels.map((_, i) => `<i class="${i < lvl ? 'on' : ''}"></i>`).join('')}</span>` : '';
-      card.innerHTML = `<div class="ic">${Icons.svg(u.icon, 22)}</div><div class="tx"><b>${UI.esc(u.name)}</b>${dots}<p>${UI.esc(u.desc)}</p></div>`;
-      const btn = UI.el('button', 'btn' + (lvl >= max ? '' : ' primary'), lvl >= max ? 'Owned' : `${max > 1 ? 'Level ' + (lvl + 1) + ' · ' : ''}<i class="coin"></i>${Progress.fmt(next.price)}`);
+      card.innerHTML = `<div class="ic">${Icons.svg(u.icon, 22)}</div><div class="tx"><b>${UI.esc(tn(u))}</b>${dots}<p>${UI.esc(td(u))}</p></div>`;
+      const btn = UI.el('button', 'btn' + (lvl >= max ? '' : ' primary'), lvl >= max ? UI.esc(t('shop.owned')) : `${max > 1 ? UI.esc(t('shop.level')) + ' ' + (lvl + 1) + ' · ' : ''}<i class="coin"></i>${Progress.fmt(next.price)}`);
       btn.type = 'button'; btn.disabled = lvl >= max;
       btn.addEventListener('click', () => {
-        if (Progress.coins() < next.price) { UI.toast(`<i class="coin"></i><div><b>Not enough coins</b><span>Need ${Progress.fmt(next.price - Progress.coins())} more</span></div>`, '#ff5d7a', 3200); return; }
+        if (Progress.coins() < next.price) { UI.toast(`<i class="coin"></i><div><b>${UI.esc(t('shop.notEnough'))}</b><span>${UI.esc(t('shop.needMoreShort', { n: Progress.fmt(next.price - Progress.coins()) }))}</span></div>`, '#ff5d7a', 3200); return; }
         Progress.spend(next.price); Progress.own(u.id + ':' + (lvl + 1)); refreshUpgrades(true); chime(); bump(); hudSync();
-        UI.toast(`<i class="coin"></i><div><b>${UI.esc(u.name)}${max > 1 ? ' Lv ' + (lvl + 1) : ''}</b><span>Installed</span></div>`, '#3ddc97', 2600); renderShop();
+        UI.toast(`<i class="coin"></i><div><b>${UI.esc(tn(u))}${max > 1 ? ' Lv ' + (lvl + 1) : ''}</b><span>${UI.esc(t('shop.installed'))}</span></div>`, '#3ddc97', 2600); renderShop();
       });
       card.appendChild(btn); wrap.appendChild(card);
     });
     bodyEl.appendChild(wrap);
-    footEl.innerHTML = '<p class="tip">Drift Kit unlocks Space-drifting and pays coins for long drifts. Hold Shift for nitro once you own it.</p>';
+    footEl.innerHTML = `<p class="tip">${UI.esc(t('shop.upgradesTip'))}</p>`;
   }
 
   function openShop() {

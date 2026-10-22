@@ -1,18 +1,13 @@
 window.PORTFOLIO.ready.then(function () {
 (function () {
-  const { profile, categories, projects, cat, byCat } = window.PORTFOLIO;
+  const PF = window.PORTFOLIO;
+  const { profile, categories, projects, cat, byCat } = PF;
+  const { catName, catShort, catBlurb, profileRole, profileTagline, profileOffer, profileSkills } = PF;
   const { el, esc, open } = window.PortfolioUI;
   const $ = (s) => document.querySelector(s);
+  const t = (k, v) => window.I18N.t(k, v);
 
-  /* Hero copy ----------------------------------------------------------- */
-  $('#role').textContent = profile.role;
-  $('#tagline').textContent = profile.tagline;
   $('#yr').textContent = new Date().getFullYear();
-  $('#stats').innerHTML = [
-    ['145+', 'Projects'],
-    [categories.length, 'Domains'],
-    ['2024', 'Since']
-  ].map(([n, l]) => `<div class="stat"><b>${n}</b><span>${l}</span></div>`).join('');
 
   /* Thumbnail: deterministic generative art from id + category colours --- */
   function hash(str) { let h = 2166136261; for (let i = 0; i < str.length; i++) { h ^= str.charCodeAt(i); h = Math.imul(h, 16777619); } return h >>> 0; }
@@ -49,57 +44,28 @@ window.PORTFOLIO.ready.then(function () {
 
   function card(p, big) {
     const c = cat(p.cats[0]);
-    const b = el('button', 'card rv' + (Progress.isFound(p.id) ? ' found' : ''));
+    const b = el('button', 'card reveal' + (Progress.isFound(p.id) ? ' found' : ''));
     b.style.setProperty('--c', c.color);
     b.type = 'button';
     b.setAttribute('aria-label', 'Open ' + p.name);
     b.appendChild(thumb(p, big ? 200 : 128));
-    if (p.featured) b.firstChild.appendChild(el('span', 'badge star', Icons.svg('star', 12) + ' Flagship'));
+    if (p.featured) b.firstChild.appendChild(el('span', 'badge star', Icons.svg('star', 12) + ' ' + esc(t('card.flagship', 'Flagship'))));
     else if (p.status !== 'Built') b.firstChild.appendChild(el('span', 'badge', esc(p.status)));
     const body = el('div', 'body');
     body.innerHTML = `
-      <div class="cats">${p.cats.map((id) => `<span class="chip" style="--c:${cat(id).color}"><i class="dot"></i>${esc(cat(id).short)}</span>`).join('')}</div>
+      <div class="cats">${p.cats.map((id) => `<span class="chip" style="--c:${cat(id).color}"><i class="dot"></i>${esc(catShort(cat(id)))}</span>`).join('')}</div>
       <h3>${esc(p.name)}</h3>
       <p>${esc(p.tagline)}</p>
-      <div class="foot">${p.stack.slice(0, 4).map((t) => `<span class="tech">${esc(t)}</span>`).join('')}</div>`;
+      <div class="foot">${p.stack.slice(0, 4).map((x) => `<span class="tech">${esc(x)}</span>`).join('')}</div>`;
     b.appendChild(body);
     b.addEventListener('click', () => open(p, { onDiscover: () => b.classList.add('found') }));
     return b;
   }
 
-  /* Featured -------------------------------------------------------------- */
-  const feat = projects.filter((p) => p.featured);
-  const fg = $('#featured-grid');
-  feat.forEach((p, i) => fg.appendChild(card(p, i < 2)));
-
-  /* Domains --------------------------------------------------------------- */
+  /* Explorer state ---------------------------------------------------------- */
   let activeCat = 'all', query = '';
-  const dg = $('#domains-grid');
-  categories.forEach((c) => {
-    const d = el('button', 'domain rv');
-    d.type = 'button';
-    d.style.setProperty('--c', c.color);
-    d.innerHTML = `<div class="ic">${Icons.svg(c.icon, 22)}</div><h4>${esc(c.name)}</h4><p>${esc(c.blurb)}</p><span class="n">${byCat(c.id).length} projects →</span>`;
-    d.addEventListener('click', () => { setCat(c.id); document.getElementById('work').scrollIntoView({ behavior: 'smooth' }); });
-    dg.appendChild(d);
-  });
+  const grid = $('#grid'), fl = $('#filters');
 
-  /* Explorer -------------------------------------------------------------- */
-  const fl = $('#filters');
-  const mk = (id, label, n, color) => {
-    const b = el('button', 'filter', `${esc(label)}<i>${n}</i>`);
-    b.type = 'button';
-    b.dataset.id = id;
-    if (color) b.style.setProperty('--c', color);
-    b.addEventListener('click', () => setCat(id));
-    return b;
-  };
-  fl.appendChild(mk('all', 'All', projects.length));
-  categories.forEach((c) => fl.appendChild(mk(c.id, c.short, byCat(c.id).length, c.color)));
-
-  function setCat(id) { activeCat = id; render(); }
-
-  const grid = $('#grid');
   function render() {
     fl.querySelectorAll('.filter').forEach((b) => b.classList.toggle('on', b.dataset.id === activeCat));
     const q = query.trim().toLowerCase();
@@ -111,26 +77,76 @@ window.PORTFOLIO.ready.then(function () {
     grid.innerHTML = '';
     list.forEach((p) => { const c = card(p); c.classList.add('in'); grid.appendChild(c); });
     $('#empty').hidden = list.length > 0;
-    $('#count').textContent = list.length + ' of ' + projects.length;
+    $('#count').textContent = t('sec.work.count', { n: list.length, total: projects.length });
   }
+  function setCat(id) { activeCat = id; render(); }
   $('#q').addEventListener('input', (e) => { query = e.target.value; render(); });
-  render();
 
-  /* About ----------------------------------------------------------------- */
-  $('#roles').innerHTML = profile.offer.map((r) => `<div class="role-card"><small>What we do</small><h4>${esc(r.title)}</h4><p>${esc(r.text)}</p></div>`).join('');
-  $('#skills').innerHTML = Object.entries(profile.skills).map(([k, v]) => `<div class="skill-group"><h4>${esc(k)}</h4><div>${v.map((t) => `<span class="tech">${esc(t)}</span>`).join('')}</div></div>`).join('');
-  /* Contact --------------------------------------------------------------- */
-  $('#contact-links').innerHTML = `
-    <a class="btn primary lg" href="${profile.links.whatsapp}" target="_blank" rel="noopener">WhatsApp · ${profile.links.whatsappDisplay}</a>
-    <a class="btn lg" href="${profile.links.facebook}" target="_blank" rel="noopener">Facebook ↗</a>
-    <a class="btn lg" href="${profile.links.github}" target="_blank" rel="noopener">GitHub ↗</a>`;
+  /* Everything that carries translatable text gets rebuilt here, both on first
+     load and whenever the language toggle fires. */
+  function renderAll() {
+    /* Hero copy */
+    $('#role').textContent = profileRole();
+    $('#tagline').textContent = profileTagline();
+    $('#stats').innerHTML = [
+      ['145+', t('hero.stat.projects')],
+      [categories.length, t('hero.stat.domains')],
+      ['2024', t('hero.stat.since')]
+    ].map(([n, l]) => `<div class="stat"><b>${n}</b><span>${l}</span></div>`).join('');
+
+    /* Featured */
+    const feat = projects.filter((p) => p.featured);
+    const fg = $('#featured-grid'); fg.innerHTML = '';
+    feat.forEach((p, i) => fg.appendChild(card(p, i < 2)));
+
+    /* Domains */
+    const dg = $('#domains-grid'); dg.innerHTML = '';
+    categories.forEach((c) => {
+      const d = el('button', 'domain reveal');
+      d.type = 'button';
+      d.style.setProperty('--c', c.color);
+      d.innerHTML = `<div class="ic">${Icons.svg(c.icon, 22)}</div><h4>${esc(catName(c))}</h4><p>${esc(catBlurb(c))}</p><span class="n">${byCat(c.id).length} ${esc(t('menu.all', 'projects'))} →</span>`;
+      d.addEventListener('click', () => { setCat(c.id); document.getElementById('work').scrollIntoView({ behavior: 'smooth' }); });
+      dg.appendChild(d);
+    });
+
+    /* Explorer filters */
+    const mk = (id, label, n, color) => {
+      const b = el('button', 'filter', `${esc(label)}<i>${n}</i>`);
+      b.type = 'button';
+      b.dataset.id = id;
+      if (color) b.style.setProperty('--c', color);
+      b.addEventListener('click', () => setCat(id));
+      return b;
+    };
+    fl.innerHTML = '';
+    fl.appendChild(mk('all', t('sec.work.filterAll', 'All'), projects.length));
+    categories.forEach((c) => fl.appendChild(mk(c.id, catShort(c), byCat(c.id).length, c.color)));
+    render();
+
+    /* About */
+    $('#roles').innerHTML = profileOffer().map((r) => `<div class="role-card"><small>${esc(t('about.whatWeDo'))}</small><h4>${esc(r.title)}</h4><p>${esc(r.text)}</p></div>`).join('');
+    $('#skills').innerHTML = profileSkills().map(([k, v]) => `<div class="skill-group"><h4>${esc(k)}</h4><div>${v.map((x) => `<span class="tech">${esc(x)}</span>`).join('')}</div></div>`).join('');
+
+    /* Contact */
+    $('#contact-links').innerHTML = `
+      <a class="btn primary lg" href="${profile.links.whatsapp}" target="_blank" rel="noopener">WhatsApp · ${profile.links.whatsappDisplay}</a>
+      <a class="btn lg" href="${profile.links.facebook}" target="_blank" rel="noopener">Facebook ↗</a>
+      <a class="btn lg" href="${profile.links.github}" target="_blank" rel="noopener">GitHub ↗</a>`;
+  }
+  renderAll();
+  window.I18N.onChange(renderAll);
 
   /* Nav + reveal ---------------------------------------------------------- */
   const nav = $('#nav');
   const onScroll = () => nav.classList.toggle('scrolled', scrollY > 20);
   addEventListener('scroll', onScroll, { passive: true }); onScroll();
   const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: 0.12 });
-  document.querySelectorAll('.rv:not(.in)').forEach((n) => io.observe(n));
+  const observeReveals = () => document.querySelectorAll('.reveal:not(.in)').forEach((n) => io.observe(n));
+  observeReveals();
+  window.I18N.onChange(observeReveals); // renderAll() rebuilds some .reveal nodes
+
+  const lb = $('#lang-toggle'); if (lb) lb.addEventListener('click', () => window.I18N.setLang(window.I18N.lang === 'ar' ? 'en' : 'ar'));
 
   /* Hero background: drifting node network ------------------------------ */
   const cv = $('#net'); const g = cv.getContext('2d');
@@ -169,19 +185,20 @@ window.PORTFOLIO.ready.then(function () {
 /* Game layer: wallet in the nav, quest bar above the explorer */
 (function () {
   const P = window.Progress, $ = (s) => document.querySelector(s);
+  const t = (k, v) => window.I18N.t(k, v);
   $('#w-total').textContent = P.TOTAL;
-  const quest = document.createElement('div'); quest.className = 'quest rv in';
+  const quest = document.createElement('div'); quest.className = 'quest reveal in';
   quest.innerHTML = '<small id="q-txt"></small><div class="q-bar"><i id="q-fill"></i></div><span class="w-coins"><i class="coin"></i><b id="q-coins">0</b></span>';
   const tools = document.querySelector('#work .tools'); tools.parentNode.insertBefore(quest, tools);
   function sync() {
     const n = P.count();
     $('#w-count').textContent = n; $('#w-coins').textContent = P.fmt(P.coins());
     $('#w-fill').style.width = (n / P.TOTAL * 100) + '%';
-    $('#q-txt').textContent = n + ' of ' + P.TOTAL + ' projects discovered — open one to earn coins, spend them in the garage';
+    $('#q-txt').textContent = t('quest.progress', { n, total: P.TOTAL });
     $('#q-fill').style.width = (n / P.TOTAL * 100) + '%'; $('#q-coins').textContent = P.fmt(P.coins());
   }
   sync(); P.on(sync);
-  P.on(() => document.querySelectorAll('.card').forEach((c) => { /* found state is set on click */ }));
+  window.I18N.onChange(sync);
 })();
 
 });

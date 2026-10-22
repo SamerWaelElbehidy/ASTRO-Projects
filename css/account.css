@@ -1,0 +1,130 @@
+/* Accounts: the sign-in/up gate (booking form + account page) and the
+   account page itself (My projects / Invitations / Discount code). Loaded
+   alongside order.css, so it reuses .inp, .btn, .fld, .err, .msg, .tabs2,
+   .tab2, .code-box, .code, .card-form, .ref-status from there. */
+
+/* -------- nav account pill -------- */
+.nav-account { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.5rem 1rem; font-size: 0.85rem; }
+.nav-account.on { border-color: rgba(10, 114, 255, 0.5); background: rgba(10, 114, 255, 0.1); color: #cfe3ff; }
+
+/* -------- tab badge (pending invitations count) -------- */
+.tab2 .badge { display: inline-flex; align-items: center; justify-content: center; min-width: 1.2em; height: 1.2em; padding: 0 0.3em; margin-inline-start: 0.4em; border-radius: 999px; background: #ff5d7a; color: #fff; font-size: 0.72em; font-weight: 700; vertical-align: 1px; }
+
+/* -------- auth gate -------- */
+.gate { padding: 1.6rem; border: 1px solid var(--line-2); border-radius: 18px; background: rgba(255, 255, 255, 0.03); margin: 1.4rem 0; }
+.gate h3 { margin: 0 0 0.4rem; font-family: var(--font-display); font-size: 1.2rem; }
+.gate-desc { color: var(--text-2); font-size: 0.9rem; line-height: 1.6; margin: 0 0 1.1rem; }
+.gate-tabs { margin: 0 0 1.2rem; }
+.gate .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; }
+.gate-consent { display: flex; align-items: flex-start; gap: 0.55rem; font-size: 0.85rem; color: var(--text-2); margin: 0.2rem 0 1.1rem; cursor: pointer; line-height: 1.5; }
+.gate-consent input { margin-top: 0.2rem; accent-color: var(--accent); }
+.gate-switch { display: block; margin: 0.9rem auto 0; background: none; border: none; color: var(--accent-2); font-size: 0.85rem; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+.gate-signed-in { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 0.9rem 1.2rem; border: 1px solid rgba(61, 220, 151, 0.4); background: rgba(61, 220, 151, 0.08); border-radius: 14px; margin: 1.2rem 0; font-size: 0.92rem; }
+.gate-signed-in button { background: none; border: none; color: var(--accent-2); cursor: pointer; font-size: 0.85rem; text-decoration: underline; }
+
+@media (max-width: 560px) { .gate .row2 { grid-template-columns: 1fr; } }
+
+/* order.css's .tabs2 is width:fit-content with no wrap handling — fine for two
+   short tabs, but account.html's three (one carrying a badge) can overflow a
+   narrow screen and drag the whole page into horizontal scroll. Scope the fix
+   to this page: let the tab strip itself scroll instead. */
+.tabs2 { max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+.tabs2::-webkit-scrollbar { display: none; }
+.tab2 { flex: 0 0 auto; white-space: nowrap; }
+
+/* -------- account page layout -------- */
+.acc-head { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.4rem; }
+.acc-head .btn { font-size: 0.85rem; }
+
+/* -------- project cards -------- */
+.proj-list { display: flex; flex-direction: column; gap: 1rem; }
+.proj-card { border: 1px solid var(--line-2); border-radius: 18px; background: linear-gradient(180deg, var(--surface-2), var(--surface)); padding: 1.3rem 1.4rem; }
+.proj-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; flex-wrap: wrap; margin-bottom: 0.9rem; }
+.proj-top h3 { margin: 0 0 0.3rem; font-family: var(--font-display); font-size: 1.1rem; }
+.proj-top .pcode { font-family: var(--font-mono); font-size: 0.78rem; color: var(--text-3); direction: ltr; display: inline-block; }
+.pill-st { display: inline-flex; align-items: center; padding: 0.3rem 0.8rem; border-radius: 999px; font-size: 0.78rem; font-weight: 600; white-space: nowrap; }
+.pill-st.pending { background: rgba(255, 210, 63, 0.14); color: #ffe082; }
+.pill-st.accepted { background: rgba(10, 114, 255, 0.14); color: #a8ccff; }
+.pill-st.in_progress { background: rgba(51, 214, 252, 0.14); color: #9eeeff; }
+.pill-st.done { background: rgba(61, 220, 151, 0.14); color: #7ff0bd; }
+.pill-st.rejected { background: rgba(255, 93, 122, 0.14); color: #ff9fb0; }
+
+.proj-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 0.8rem; margin-bottom: 1rem; }
+.proj-stat { padding: 0.7rem 0.9rem; border-radius: 12px; background: rgba(255, 255, 255, 0.03); border: 1px solid var(--line); }
+.proj-stat small { display: block; color: var(--text-3); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.25rem; }
+.proj-stat b { font-size: 1rem; }
+.proj-stat.warn b { color: #ffe082; }
+.proj-stat.good b { color: #7ff0bd; }
+
+.proj-team { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
+.member-chip { display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.35rem 0.7rem; border-radius: 999px; background: rgba(255, 255, 255, 0.04); border: 1px solid var(--line); font-size: 0.82rem; }
+.member-chip.lead { border-color: rgba(255, 210, 63, 0.5); background: rgba(255, 210, 63, 0.08); }
+
+.proj-notes { font-size: 0.85rem; color: var(--text-2); background: rgba(255, 255, 255, 0.03); border-radius: 12px; padding: 0.7rem 0.9rem; margin-bottom: 1rem; }
+.proj-notes b { color: var(--text); display: block; margin-bottom: 0.2rem; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.05em; }
+
+.invite-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+.invite-row .inp { flex: 1; min-width: 200px; }
+.invite-note { font-size: 0.8rem; color: var(--text-3); margin-top: 0.4rem; }
+
+/* -------- team & roles (leader-only) -------- */
+.proj-team-settings { margin-bottom: 1rem; border: 1px solid var(--line); border-radius: 12px; padding: 0.2rem 0.9rem; background: rgba(255, 255, 255, 0.02); }
+.proj-team-settings summary { padding: 0.65rem 0; font-size: 0.85rem; font-weight: 600; color: var(--text-2); cursor: pointer; }
+.team-rows { display: flex; flex-direction: column; gap: 0.7rem; padding-bottom: 0.9rem; }
+.team-row { padding: 0.7rem 0.8rem; border-radius: 10px; border: 1px solid var(--line); background: rgba(255, 255, 255, 0.02); }
+.team-row-head { display: flex; align-items: center; gap: 0.4rem; margin-bottom: 0.5rem; font-size: 0.88rem; }
+.team-row-acts { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.team-row-acts .inp { flex: 1; min-width: 160px; height: 38px; padding: 0 0.8rem; font-size: 0.82rem; }
+.team-row-acts .btn { padding: 0.4rem 0.8rem; font-size: 0.78rem; white-space: nowrap; }
+.member-chip .m-role { color: var(--text-3); font-weight: 400; }
+
+/* -------- "what you told us" (collapsed, read-only recap) -------- */
+.proj-details { margin-bottom: 1rem; border: 1px solid var(--line); border-radius: 12px; padding: 0.2rem 0.9rem; background: rgba(255, 255, 255, 0.02); }
+.proj-details summary { padding: 0.65rem 0; font-size: 0.85rem; font-weight: 600; color: var(--text-2); cursor: pointer; }
+.proj-details .review { padding-bottom: 0.8rem; }
+.proj-details .rv-members { padding-bottom: 0.8rem; }
+
+/* -------- project roadmap (the 9-step build process) -------- */
+.proj-roadmap { margin-bottom: 1rem; }
+.proj-roadmap > summary { font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-3); cursor: pointer; margin-bottom: 0.7rem; }
+.stage-list { display: flex; flex-direction: column; gap: 0.5rem; }
+.stage { border-radius: 12px; border: 1px solid var(--line); padding: 0.7rem 0.9rem; background: rgba(255, 255, 255, 0.02); }
+.stage.locked { opacity: 0.5; }
+.stage.current { border-color: rgba(255, 210, 63, 0.55); background: rgba(255, 210, 63, 0.07); box-shadow: 0 0 0 1px rgba(255, 210, 63, 0.25) inset; }
+.stage.done { border-color: rgba(61, 220, 151, 0.4); background: rgba(61, 220, 151, 0.05); }
+.stage-head { display: flex; align-items: center; gap: 0.5rem; font-size: 0.88rem; }
+.stage.locked .stage-head { color: var(--text-3); }
+.stage-head .ic-svg { flex: none; opacity: 0.7; }
+.stage.current .stage-head .ic-svg { color: #ffe082; }
+.stage.done .stage-head .ic-svg { color: #7ff0bd; }
+.stage-tag { margin-inline-start: auto; font-size: 0.7rem; padding: 0.15rem 0.55rem; border-radius: 999px; background: rgba(255, 255, 255, 0.06); color: var(--text-3); }
+.stage-tag.done { background: rgba(61, 220, 151, 0.14); color: #7ff0bd; }
+.stage-note { font-size: 0.85rem; color: var(--text-2); margin: 0.5rem 0 0; line-height: 1.6; }
+.stage-date { display: flex; align-items: center; gap: 0.35rem; font-size: 0.78rem; color: var(--text-3); margin: 0.4rem 0 0; }
+.stage-photos { display: grid; grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); gap: 0.5rem; margin-top: 0.6rem; }
+.stage-photos img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 8px; border: 1px solid var(--line); }
+
+/* -------- invitations -------- */
+.invite-list { display: flex; flex-direction: column; gap: 0.8rem; }
+.invite-card { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; padding: 1rem 1.2rem; border: 1px solid var(--line-2); border-radius: 14px; background: rgba(255, 255, 255, 0.03); }
+.invite-card .txt b { font-family: var(--font-display); }
+.invite-card .acts { display: flex; gap: 0.5rem; }
+.invite-card .btn.reject { color: #ff9fb0; border-color: rgba(255, 93, 122, 0.4); }
+.invite-card .status-done { font-size: 0.85rem; color: var(--text-3); }
+
+/* -------- discount code tab -------- */
+.code-card { text-align: center; padding: 2rem 1.4rem; }
+.code-actions { display: flex; gap: 0.6rem; justify-content: center; flex-wrap: wrap; margin-top: 0.8rem; }
+.code-desc { max-width: 560px; margin: 1.1rem auto 0; color: var(--text-2); font-size: 0.92rem; line-height: 1.7; }
+
+.wallet-card { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; padding: 1.3rem 1.5rem; border-radius: 18px; border: 1px solid rgba(61, 220, 151, 0.35); background: rgba(61, 220, 151, 0.06); margin: 1.4rem 0; }
+.wallet-card .amount { font-family: var(--font-display); font-size: 2rem; color: #7ff0bd; }
+.wallet-card small { display: block; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.72rem; margin-bottom: 0.3rem; }
+
+.ledger { display: flex; flex-direction: column; gap: 0.5rem; }
+.ledger-row { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 0.7rem 0.9rem; border-radius: 10px; background: rgba(255, 255, 255, 0.03); font-size: 0.86rem; }
+.ledger-row .amt { color: #7ff0bd; font-weight: 600; }
+.ledger-row .meta { color: var(--text-3); font-size: 0.78rem; }
+
+.empty-state { text-align: center; padding: 2.5rem 1rem; color: var(--text-2); }
+.empty-state .ic-svg { opacity: 0.4; margin-bottom: 0.8rem; }

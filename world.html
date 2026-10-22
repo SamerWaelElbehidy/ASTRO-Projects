@@ -9,78 +9,81 @@
   <link rel="icon" type="image/png" href="assets/favicon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/base.css?v=4">
-  <link rel="stylesheet" href="css/modal.css?v=4">
-  <link rel="stylesheet" href="css/world.css?v=4">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/base.css?v=17">
+  <link rel="stylesheet" href="css/modal.css?v=17">
+  <link rel="stylesheet" href="css/world.css?v=17">
 </head>
 <body class="world">
   <canvas id="gl" aria-label="3D world"></canvas>
 
-  <div id="loader"><img class="ld-logo" src="assets/astro-symbol.webp" alt="" width="40" height="82"><p>Building the world…</p><div class="ld-bar"><i id="ld-fill"></i></div></div>
+  <div id="loader"><img class="ld-logo" src="assets/astro-symbol.webp" alt="" width="40" height="82"><p data-i18n="w.building">Building the world…</p><div class="ld-bar"><i id="ld-fill"></i></div></div>
 
   <div class="hud" id="hud" hidden>
-    <a class="hud-back" href="index.html"><span data-icon="arrow-left" data-size="16"></span> ASTRO Projects</a>
-    <div class="wallet-hud" id="wallet-hud" title="Projects discovered · coins"><span class="w-prog"><b id="wh-c">0</b> / <span id="wh-t"></span></span><span class="w-bar"><i id="wh-fill"></i></span><span class="w-coins"><i class="coin"></i><b id="wh-coins">0</b></span></div>
+    <a class="hud-back" href="index.html"><span data-icon="arrow-left" data-size="16"></span> <span data-i18n="w.back">ASTRO Projects</span></a>
+    <div class="wallet-hud" id="wallet-hud" data-i18n-title="top.walletTitle" title="Projects discovered · coins"><span class="w-prog"><b id="wh-c">0</b> / <span id="wh-t"></span></span><span class="w-bar"><i id="wh-fill"></i></span><span class="w-coins"><i class="coin"></i><b id="wh-coins">0</b></span></div>
 
-    <div class="hud-district" id="district"><small>Now entering</small><b></b></div>
+    <div class="hud-district" id="district"><small data-i18n="w.nowEntering">Now entering</small><b></b></div>
 
     <div class="hud-right">
       <canvas id="minimap" width="220" height="220" aria-label="Map"></canvas>
       <div class="hud-btns">
-        <a href="order.html" class="ico gold" title="Book a project"><span data-icon="send" data-size="15"></span> Book</a>
-        <button id="btn-shop" class="ico gold" title="Garage"><span data-icon="wrench" data-size="15"></span> Garage</button>
-        <button id="btn-map" class="ico" title="Districts &amp; search (Tab)"><span data-icon="map" data-size="15"></span> Districts</button>
-        <button id="btn-cam" class="ico" title="Camera (C)" aria-label="Camera"><span data-icon="camera" data-size="16"></span></button>
-        <button id="btn-snd" class="ico" title="Sound (M)" aria-label="Sound"><span data-icon="music" data-size="16"></span></button>
+        <a href="order.html" class="ico gold" data-i18n-title="nav.book" title="Book a project"><span data-icon="send" data-size="15"></span> <span data-i18n="w.book">Book</span></a>
+        <a href="account.html" class="ico" data-i18n-title="menu.account" title="My account"><span data-icon="user" data-size="15"></span> <span data-i18n="w.account">Account</span></a>
+        <button id="btn-shop" class="ico gold" data-i18n-title="w.garage" title="Garage"><span data-icon="wrench" data-size="15"></span> <span data-i18n="w.garage">Garage</span></button>
+        <button id="btn-map" class="ico" data-i18n-title="w.districtsTitle" title="Districts &amp; search (Tab)"><span data-icon="map" data-size="15"></span> <span data-i18n="w.districts">Districts</span></button>
+        <button id="btn-cam" class="ico" data-i18n-title="w.camera" title="Camera (C)" aria-label="Camera"><span data-icon="camera" data-size="16"></span></button>
+        <button id="btn-snd" class="ico" data-i18n-title="w.sound" title="Sound (M)" aria-label="Sound"><span data-icon="music" data-size="16"></span></button>
+        <button class="ico hud-lang" id="lang-toggle" type="button">عربي</button>
       </div>
     </div>
 
-    <div class="nitro" id="nitro" hidden><small>Nitro · Shift</small><span><i id="nitro-fill"></i></span></div>
+    <div class="nitro" id="nitro" hidden><small data-i18n="w.nitro">Nitro · Shift</small><span><i id="nitro-fill"></i></span></div>
     <div class="drift-hud" id="drift-hud"></div>
-    <div class="hud-speed"><b id="spd">0</b><span>km/h</span></div>
+    <div class="hud-speed"><b id="spd">0</b><span data-i18n="w.speedUnit">km/h</span></div>
 
-    <button class="prompt" id="prompt" hidden><span class="k">Enter</span><span class="txt"></span></button>
+    <button class="prompt" id="prompt" hidden><span class="k" data-i18n="w.openPrompt">Enter</span><span class="txt"></span></button>
 
     <div class="keys" id="keys">
-      <span><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> / arrows drive</span>
-      <span><kbd>Space</kbd> drift (garage)</span>
-      <span><kbd>Shift</kbd> nitro (garage)</span>
-      <span><kbd>H</kbd> horn</span>
-      <span><kbd>Enter</kbd> open project</span>
-      <span><kbd>R</kbd> reset car</span>
+      <span><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> <span data-i18n="w.keys.drive">/ arrows drive</span></span>
+      <span><kbd>Space</kbd> <span data-i18n="w.keys.drift">drift (garage)</span></span>
+      <span><kbd>Shift</kbd> <span data-i18n="w.keys.nitro">nitro (garage)</span></span>
+      <span><kbd>H</kbd> <span data-i18n="w.keys.horn">horn</span></span>
+      <span><kbd>Enter</kbd> <span data-i18n="w.keys.open">open project</span></span>
+      <span><kbd>R</kbd> <span data-i18n="w.keys.reset">reset car</span></span>
     </div>
 
     <div class="touch" id="touch">
       <div class="stick" id="stick"><i id="knob"></i></div>
       <div class="tbtns">
-        <button id="t-open" class="tb primary">Open</button>
-        <button id="t-nitro" class="tb nitro-b" hidden>Nitro</button>
-        <button id="t-drift" class="tb">Drift</button>
-        <button id="t-horn" class="tb">Horn</button>
+        <button id="t-open" class="tb primary" data-i18n="w.touch.open">Open</button>
+        <button id="t-nitro" class="tb nitro-b" hidden data-i18n="w.touch.nitro">Nitro</button>
+        <button id="t-drift" class="tb" data-i18n="w.touch.drift">Drift</button>
+        <button id="t-horn" class="tb" data-i18n="w.touch.horn">Horn</button>
       </div>
     </div>
   </div>
 
   <aside class="panel" id="panel" aria-hidden="true">
     <header>
-      <b>Districts &amp; projects</b>
-      <button id="panel-x" class="ico" aria-label="Close"><span data-icon="x" data-size="16"></span></button>
+      <b data-i18n="w.panelTitle">Districts &amp; projects</b>
+      <button id="panel-x" class="ico" data-i18n-aria="w.panelClose" aria-label="Close"><span data-icon="x" data-size="16"></span></button>
     </header>
-    <input id="pq" type="search" placeholder="Find a project and drive there…" aria-label="Search projects">
+    <input id="pq" type="search" data-i18n-ph="w.panelSearchPh" placeholder="Find a project and drive there…" aria-label="Search projects">
     <div id="plist"></div>
   </aside>
 
-  <noscript><p style="padding:2rem">This interactive world needs JavaScript. <a href="index.html">Back to the portfolio</a>.</p></noscript>
+  <noscript><p style="padding:2rem" data-i18n="w.noscript">This interactive world needs JavaScript.</p><a href="index.html" data-i18n="w.backToPortfolio" style="padding:0 2rem">Back to the portfolio</a></noscript>
 
-  <script src="js/vendor/three.min.js?v=4"></script>
-  <script src="js/icons.js?v=4"></script>
-  <script src="js/data.js?v=4"></script>
-  <script src="js/config.js?v=4"></script>
-  <script src="js/community.js?v=4"></script>
-  <script src="js/progress.js?v=4"></script>
-  <script src="js/shop.js?v=4"></script>
-  <script src="js/ui.js?v=4"></script>
-  <script src="js/world.js?v=4"></script>
+  <script src="js/vendor/three.min.js?v=17"></script>
+  <script src="js/icons.js?v=17"></script>
+  <script src="js/data.js?v=17"></script>
+  <script src="js/config.js?v=17"></script>
+  <script src="js/i18n-order.js?v=17"></script>
+  <script src="js/community.js?v=17"></script>
+  <script src="js/progress.js?v=17"></script>
+  <script src="js/shop.js?v=17"></script>
+  <script src="js/ui.js?v=17"></script>
+  <script src="js/world.js?v=17"></script>
 </body>
 </html>

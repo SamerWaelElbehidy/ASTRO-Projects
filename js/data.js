@@ -7,13 +7,21 @@
 (function () {
   const GH = 'https://github.com/SamerWaelElbehidy/';
 
+  // Picks the Arabic string when the site is set to Arabic and one is given,
+  // English otherwise. Used for the fields below that carry an *Ar sibling —
+  // project data itself (name/tagline/desc/points) isn't translated yet.
+  const L = (en, ar) => ((window.I18N && window.I18N.lang === 'ar' && ar) ? ar : en);
+
   const profile = {
     name: 'ASTRO Projects',
     first: 'ASTRO',
     last: 'Projects',
     role: 'Robotics · Embedded Systems · IoT · AI',
+    roleAr: 'روبوتات · أنظمة مدمجة · إنترنت الأشياء · ذكاء اصطناعي',
     tagline: 'ASTRO is a training and technical-development studio in New Damietta, Egypt. Explore the robotics, embedded, IoT and AI projects built by the ASTRO team — or drive through them in 3D.',
+    taglineAr: 'ASTRO استوديو تدريب وتطوير تقني في دمياط الجديدة. استكشف مشاريع الروبوتات والأنظمة المدمجة وإنترنت الأشياء والذكاء الاصطناعي اللي بناها فريق ASTRO — أو تجوّل بينها بسيارتك في عالم ثلاثي الأبعاد.',
     location: 'New Damietta, Egypt',
+    locationAr: 'دمياط الجديدة، مصر',
     links: {
       whatsapp: 'https://wa.me/201068403242',
       whatsappDisplay: '010 6840 3242',
@@ -21,28 +29,31 @@
       github: 'https://github.com/SamerWaelElbehidy'
     },
     offer: [
-      { title: 'Training', text: 'Hands-on courses in robotics, electronics, Arduino, ESP32, CAD and 3D printing for children, students and adults.' },
-      { title: 'Projects', text: 'Robotics, IoT, embedded and AI systems designed, built, programmed and tested in-house.' },
-      { title: 'Store & fabrication', text: 'Electronic components, sensors, motors, 3D printing and laser cutting.' }
+      { title: 'Training', titleAr: 'تدريب', text: 'Hands-on courses in robotics, electronics, Arduino, ESP32, CAD and 3D printing for children, students and adults.', textAr: 'كورسات عملية في الروبوتات والإلكترونيات وأردوينو وESP32 وتصميم CAD والطباعة ثلاثية الأبعاد، للأطفال والطلاب والكبار.' },
+      { title: 'Projects', titleAr: 'المشاريع', text: 'Robotics, IoT, embedded and AI systems designed, built, programmed and tested in-house.', textAr: 'أنظمة روبوتات وإنترنت أشياء وأنظمة مدمجة وذكاء اصطناعي، بنصممها ونبنيها ونبرمجها ونختبرها بنفسنا.' },
+      { title: 'Store & fabrication', titleAr: 'المتجر والتصنيع', text: 'Electronic components, sensors, motors, 3D printing and laser cutting.', textAr: 'مكونات إلكترونية وحساسات ومحركات وطباعة ثلاثية الأبعاد وقص ليزر.' }
     ],
     skills: {
       'Machine Learning': ['Python', 'TensorFlow', 'Keras', 'PyTorch', 'Scikit-learn', 'OpenCV', 'CNNs', 'TinyML'],
       'Embedded & IoT': ['ESP32', 'STM32', 'Arduino', 'Raspberry Pi', 'C / C++', 'ROS', 'LIDAR', 'REST APIs'],
       'Software': ['React', 'TypeScript', 'Next.js', 'NestJS', 'Flask', 'FastAPI', 'Flutter', 'React Native', 'Firebase'],
       'Cloud & Ops': ['Microsoft Azure', 'MLOps', 'Docker', 'PostgreSQL', 'Redis', 'Git']
-    }
+    },
+    // Arabic labels for the skills groups above (tech/product names inside each
+    // group stay as-is — "React", "ESP32" etc. aren't translated in any language).
+    skillGroupNamesAr: { 'Machine Learning': 'تعلم آلي', 'Embedded & IoT': 'أنظمة مدمجة وإنترنت الأشياء', 'Software': 'برمجيات', 'Cloud & Ops': 'سحابة وعمليات' }
   };
 
   const categories = [
-    { id: 'healthcare', name: 'Healthcare & Assistive Tech', short: 'Healthcare', color: '#ff5d7a', icon: 'heart-pulse', blurb: 'Devices and models that help people move, see, hear, heal and be monitored.' },
-    { id: 'ai',         name: 'AI & Machine Learning',        short: 'AI / ML',    color: '#9b7bff', icon: 'sparkles', blurb: 'Deep learning, classical ML and applied data science, trained and deployed.' },
-    { id: 'vision',     name: 'Computer Vision & Speech',     short: 'Vision',     color: '#33d6ff', icon: 'eye', blurb: 'Systems that see, listen and understand: faces, plates, gaze, voice.' },
-    { id: 'iot',        name: 'Smart Spaces & IoT',           short: 'IoT',        color: '#3ddc97', icon: 'wifi', blurb: 'Connected buildings, parking, labs and infrastructure built around ESP32 and STM32 nodes.' },
-    { id: 'agri',       name: 'Agriculture & Environment',    short: 'Agri',       color: '#9be15d', icon: 'leaf', blurb: 'Sensing and automation for plants, air quality and energy.' },
-    { id: 'robotics',   name: 'Robotics & Vehicles',          short: 'Robotics',   color: '#ff9f43', icon: 'bot', blurb: 'Line followers, fire-fighting cars, RC vehicles and closed-loop control.' },
-    { id: 'embedded',   name: 'Embedded & Electronics',       short: 'Embedded',   color: '#ffd23f', icon: 'cpu', blurb: 'Firmware, custom peripherals and hardware experiments from the bench.' },
-    { id: 'web',        name: 'Web & Mobile Apps',            short: 'Web / Apps', color: '#4d8bff', icon: 'globe', blurb: 'Full-stack products: marketplaces, stores, dashboards and mobile apps.' },
-    { id: 'interactive',name: 'Games & Interactive',          short: 'Interactive',color: '#ff6bd6', icon: 'gamepad', blurb: 'Playful devices and interfaces: games, gloves, keyboards and air mice.' }
+    { id: 'healthcare', name: 'Healthcare & Assistive Tech', nameAr: 'رعاية صحية وتقنيات مساعدة', short: 'Healthcare', shortAr: 'رعاية صحية', color: '#ff5d7a', icon: 'heart-pulse', blurb: 'Devices and models that help people move, see, hear, heal and be monitored.', blurbAr: 'أجهزة ونماذج بتساعد الناس يتحركوا ويشوفوا ويسمعوا ويتعالجوا ويتابَعوا صحيًا.' },
+    { id: 'ai',         name: 'AI & Machine Learning',        nameAr: 'ذكاء اصطناعي وتعلم آلي',       short: 'AI / ML',    shortAr: 'ذكاء اصطناعي', color: '#9b7bff', icon: 'sparkles', blurb: 'Deep learning, classical ML and applied data science, trained and deployed.', blurbAr: 'تعلم عميق وتعلم آلي تقليدي وعلم بيانات تطبيقي، مدرَّب ومنشور فعليًا.' },
+    { id: 'vision',     name: 'Computer Vision & Speech',     nameAr: 'رؤية حاسوبية وصوت',             short: 'Vision',     shortAr: 'رؤية',         color: '#33d6ff', icon: 'eye', blurb: 'Systems that see, listen and understand: faces, plates, gaze, voice.', blurbAr: 'أنظمة بتشوف وتسمع وتفهم: وجوه، لوحات سيارات، اتجاه النظر، الصوت.' },
+    { id: 'iot',        name: 'Smart Spaces & IoT',           nameAr: 'مساحات ذكية وإنترنت الأشياء',   short: 'IoT',        shortAr: 'إنترنت الأشياء', color: '#3ddc97', icon: 'wifi', blurb: 'Connected buildings, parking, labs and infrastructure built around ESP32 and STM32 nodes.', blurbAr: 'مباني وموقف سيارات ومعامل وبنية تحتية متصلة، مبنية حول وحدات ESP32 وSTM32.' },
+    { id: 'agri',       name: 'Agriculture & Environment',    nameAr: 'الزراعة والبيئة',               short: 'Agri',       shortAr: 'زراعة',        color: '#9be15d', icon: 'leaf', blurb: 'Sensing and automation for plants, air quality and energy.', blurbAr: 'استشعار وأتمتة للنباتات وجودة الهواء والطاقة.' },
+    { id: 'robotics',   name: 'Robotics & Vehicles',          nameAr: 'روبوتات ومركبات',               short: 'Robotics',   shortAr: 'روبوتات',      color: '#ff9f43', icon: 'bot', blurb: 'Line followers, fire-fighting cars, RC vehicles and closed-loop control.', blurbAr: 'عربيات تتبع خط، عربيات إطفاء حريق، مركبات تحكم عن بعد، وتحكم بحلقة مغلقة.' },
+    { id: 'embedded',   name: 'Embedded & Electronics',       nameAr: 'أنظمة مدمجة وإلكترونيات',       short: 'Embedded',   shortAr: 'أنظمة مدمجة',   color: '#ffd23f', icon: 'cpu', blurb: 'Firmware, custom peripherals and hardware experiments from the bench.', blurbAr: 'برمجيات ثابتة وملحقات مخصوصة وتجارب هاردوير من على طاولة الشغل.' },
+    { id: 'web',        name: 'Web & Mobile Apps',            nameAr: 'تطبيقات ويب وموبايل',           short: 'Web / Apps', shortAr: 'ويب / تطبيقات', color: '#4d8bff', icon: 'globe', blurb: 'Full-stack products: marketplaces, stores, dashboards and mobile apps.', blurbAr: 'منتجات متكاملة: أسواق إلكترونية، متاجر، لوحات تحكم، وتطبيقات موبايل.' },
+    { id: 'interactive',name: 'Games & Interactive',          nameAr: 'ألعاب وتفاعلية',                short: 'Interactive',shortAr: 'تفاعلية',      color: '#ff6bd6', icon: 'gamepad', blurb: 'Playful devices and interfaces: games, gloves, keyboards and air mice.', blurbAr: 'أجهزة وواجهات تفاعلية: ألعاب، قفازات، لوحات مفاتيح، وفأرة هوائية.' }
   ];
 
   const P = (o) => Object.assign({ featured: false, links: {}, status: 'Built' }, o);
@@ -771,7 +782,16 @@
     })
   ];
 
-  window.PORTFOLIO = { profile, categories, projects };
+  window.PORTFOLIO = { profile, categories, projects, L };
   window.PORTFOLIO.byCat = (id) => projects.filter((p) => p.cats.includes(id));
   window.PORTFOLIO.cat = (id) => categories.find((c) => c.id === id);
+  // Lang-aware accessors — call these instead of reading .name/.short/.blurb
+  // directly wherever the result reaches the page (site.js, world.js, ui.js).
+  window.PORTFOLIO.catName = (c) => L(c.name, c.nameAr);
+  window.PORTFOLIO.catShort = (c) => L(c.short, c.shortAr);
+  window.PORTFOLIO.catBlurb = (c) => L(c.blurb, c.blurbAr);
+  window.PORTFOLIO.profileRole = () => L(profile.role, profile.roleAr);
+  window.PORTFOLIO.profileTagline = () => L(profile.tagline, profile.taglineAr);
+  window.PORTFOLIO.profileOffer = () => profile.offer.map((o) => ({ title: L(o.title, o.titleAr), text: L(o.text, o.textAr) }));
+  window.PORTFOLIO.profileSkills = () => Object.entries(profile.skills).map(([k, v]) => [L(k, profile.skillGroupNamesAr[k]), v]);
 })();

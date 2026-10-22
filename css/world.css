@@ -14,6 +14,7 @@ html, body { height: 100%; overflow: hidden; overscroll-behavior: none; touch-ac
 .hud > * { pointer-events: auto; }
 .hud-back { position: absolute; top: max(1rem, env(safe-area-inset-top)); left: 1rem; padding: 0.55rem 1rem; border-radius: 999px; background: rgba(8, 10, 20, 0.6); backdrop-filter: blur(10px); border: 1px solid var(--line-2); font-size: 0.85rem; font-weight: 600; transition: background 0.2s; }
 .hud-back:hover { background: rgba(255, 255, 255, 0.14); }
+.hud-btns .hud-lang { padding: 0.5rem 0.85rem; font-size: 0.8rem; }
 
 .hud-district { position: absolute; top: 4.4rem; left: 50%; transform: translate(-50%, -12px); text-align: center; opacity: 0; transition: opacity 0.5s, transform 0.5s var(--ease); pointer-events: none; }
 .hud-district.show { opacity: 1; transform: translate(-50%, 0); }
@@ -23,6 +24,7 @@ html, body { height: 100%; overflow: hidden; overscroll-behavior: none; touch-ac
 .hud-right { position: absolute; top: max(1rem, env(safe-area-inset-top)); right: 1rem; display: grid; gap: 0.6rem; justify-items: end; }
 #minimap { width: 150px; height: 150px; border-radius: 50%; background: rgba(8, 10, 20, 0.55); backdrop-filter: blur(6px); border: 1px solid var(--line-2); box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4); }
 .hud-btns { display: flex; gap: 0.4rem; }
+@media (max-width: 760px) { .hud-btns { flex-wrap: wrap; justify-content: flex-end; max-width: calc(100vw - 2rem); } }
 .ico { padding: 0.5rem 0.85rem; border-radius: 999px; border: 1px solid var(--line-2); background: rgba(8, 10, 20, 0.6); backdrop-filter: blur(10px); font-size: 0.8rem; font-weight: 600; transition: background 0.2s; }
 .ico:hover { background: rgba(255, 255, 255, 0.14); }
 .ico.off { opacity: 0.45; }
