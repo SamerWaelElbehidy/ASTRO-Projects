@@ -1,8 +1,10 @@
-/* Loads finished client projects published from the admin panel and merges them into PORTFOLIO.projects.
+/* Loads finished client projects published from the unified ASTRO Store admin
+   dashboard (astro-store-backend's GET /api/public-projects) and merges them
+   into PORTFOLIO.projects.
    Pages await PORTFOLIO.ready before they build their UI (with a time limit, so a slow network never blocks the site). */
 (function () {
   const P = window.PORTFOLIO;
-  const base = document.currentScript ? document.currentScript.src : location.href;
+  const CFG = window.ASTRO_CONFIG;
   const validCats = new Set(P.categories.map((c) => c.id));
   const arr = (x) => (Array.isArray(x) ? x.filter(Boolean).map(String) : []);
 
@@ -27,12 +29,13 @@
 
   async function load() {
     try {
-      const mod = await import(new URL('cloud.js', base).href);
-      const list = await mod.default.listPublicProjects();
+      const res = await fetch(CFG.storeApi + '/public-projects');
+      const data = await res.json();
+      const list = Array.isArray(data.projects) ? data.projects : [];
       list.filter((p) => p && p.id && p.published !== false)
         .sort((a, b) => String(a.publishedAt || '').localeCompare(String(b.publishedAt || '')))
         .forEach((p) => { const n = normalize(p); if (!P.projects.some((x) => x.id === n.id)) P.projects.push(n); });
-    } catch (e) { /* offline or rules not published yet: the built-in projects are enough */ }
+    } catch (e) { /* offline or backend unreachable: the built-in projects are enough */ }
   }
 
   P.ready = Promise.race([load(), new Promise((r) => setTimeout(r, 3500))]);
